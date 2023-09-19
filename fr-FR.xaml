@@ -1,0 +1,179 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!-- Boutons -->
+    <sys:String x:Key="NextPage">SUIVANT ></sys:String>
+    <sys:String x:Key="Exit">QUITTER</sys:String>
+    <sys:String x:Key="PreviousPage">&lt; PREVIOUS PAGE</sys:String>
+    <sys:String x:Key="ApplyColor">APPLIQUER COULEUR</sys:String>
+    <sys:String x:Key="ExportResults">EXPORTER RESULTATS</sys:String>
+    <sys:String x:Key="Settings">AFFICHER PARAMETRES</sys:String>
+    <sys:String x:Key="ExportSettings">EXPORTER PARAMETRES</sys:String>
+    <sys:String x:Key="ImportSettings">IMPORTER PARAMETRES</sys:String>
+    <sys:String x:Key="StaticSettings">APPLIQUER PARAMETRES STATIQUES</sys:String>
+    <sys:String x:Key="DynamicSettings">APPLIQUER PARAMETRES DYNAMIQUES</sys:String>
+    <sys:String x:Key="Ping">PING ADRESSE IP</sys:String>
+    <sys:String x:Key="Scan">SCANNER RESEAU</sys:String>
+    <sys:String x:Key="Mtu">CHECKER TAILLE PAQUET</sys:String>
+    <sys:String x:Key="Arp">AFFICHER CACHE ARP</sys:String>
+    <sys:String x:Key="Tracert">TRACER ADRESSE IP</sys:String>
+    <sys:String x:Key="Route">AFFICHER TABLE ROUTAGE</sys:String>
+    <sys:String x:Key="netMaskCalc">CALCULER MASQUE</sys:String>
+    <sys:String x:Key="nettingCalc">CALCULER SUBNET/SUPERNET</sys:String>
+    <sys:String x:Key="networkCalc">CALCULER RESEAU</sys:String>
+    <sys:String x:Key="ThemeColorWiz">LANCER SELECTION COULEUR ET THEME</sys:String>
+    <sys:String x:Key="LangWiz">LANCER SELECTION DES LANGUES</sys:String>
+    <sys:String x:Key="Tutorial">AFFICHER TUTORIEL</sys:String>
+    <sys:String x:Key="ProjWebsite">OUVRIR SITE WEB PROJET</sys:String>
+    <sys:String x:Key="Menu">MENU</sys:String>
+    <sys:String x:Key="NetConfig">CONFIGURATION RESEAU</sys:String>
+    <sys:String x:Key="ChangeConfig">CHANGER CONFIGURATION</sys:String>
+    <sys:String x:Key="NetCommands">COMMANDES RESEAUX</sys:String>
+    <sys:String x:Key="Calculator">CALCULATRICE RESEAU</sys:String>
+    <sys:String x:Key="AppSettings">APPLICATION'S SETTINGS</sys:String>
+    <sys:String x:Key="French">METTRE EN FRANCAIS</sys:String>
+    <sys:String x:Key="English">METTRE EN ANGLAIS</sys:String>
+    <sys:String x:Key="ApplyLang">APPLIQUER CHOIX LANGUE</sys:String>
+    <sys:String x:Key="LightTheme">THEME CLAIR</sys:String>
+    <sys:String x:Key="DarkTheme">THEME SOMBRE</sys:String>
+    <sys:String x:Key="Cyan">CYAN</sys:String>
+    <sys:String x:Key="Brown">MARRON</sys:String>
+    <sys:String x:Key="DeepOrange">ORANGE FONCE</sys:String>
+    <sys:String x:Key="BlueGrey">GRIS BLEUTE</sys:String>
+    <sys:String x:Key="DeepPurple">VIOLET FONCE</sys:String>
+    <sys:String x:Key="Green">VERT</sys:String>
+    <sys:String x:Key="Blue">BLEU</sys:String>
+    <sys:String x:Key="Grey">GRIS</sys:String>
+    <sys:String x:Key="Amber">AMBRE</sys:String>
+    <sys:String x:Key="Pink">ROSE</sys:String>
+    <sys:String x:Key="Orange">ORANGE</sys:String>
+    <sys:String x:Key="Purple">VIOLET</sys:String>
+    <sys:String x:Key="Lime">VERT CITRON</sys:String>
+    <sys:String x:Key="Red">ROUGE</sys:String>
+    <sys:String x:Key="LightGreen">VERT CLAIR</sys:String>
+    <sys:String x:Key="Teal">BLEU CANARD</sys:String>
+    <sys:String x:Key="LightBlue">BLEU CLAIR</sys:String>
+    <sys:String x:Key="Indigo">INDIGO</sys:String>
+
+    <!-- Labels -->
+    <sys:String x:Key="IpAddressLabelContent">ENTRER ADRESSE IP...</sys:String>
+    <sys:String x:Key="NetworkAddressLabelContent">ENTRER ADRESSE RESEAU...</sys:String>
+    <sys:String x:Key="NetworkMaskLabelContent">ENTRER MASQUE RESEAU...</sys:String>
+    <sys:String x:Key="NewNetworkMaskLabelContent">ENTRER NOUVEAU MASQUE...</sys:String>
+    <sys:String x:Key="TimeoutLabelContent">ENTRER DELAI D'ATTENTE...</sys:String>
+    <sys:String x:Key="RepetitionLabelContent">ENTRER NOMBRE REPETITON...</sys:String>
+    <sys:String x:Key="FirstHostLabelContent">ENTRER ADRESSE IP DEPART...</sys:String>
+    <sys:String x:Key="LastHostLabelContent">ENTRER ADRESSE IP FIN...</sys:String>
+    <sys:String x:Key="FirstValLabelContent">ENTRER PREMIER VALEUR...</sys:String>
+    <sys:String x:Key="LastValLabelContent">ENTRER DERNIERE VALEUR...</sys:String>
+
+    <!-- TextBox -->
+    <sys:String x:Key="IpAddressTxtBx">ADRESE IP :</sys:String>
+    <sys:String x:Key="NetMaskTxtBx">MASQUE DE RESEAU :</sys:String>
+    <sys:String x:Key="DefGatewayTxtBx">PASSERELLE :</sys:String>
+    <sys:String x:Key="PrimDnsTxtBx">DNS PRINCIPAL :</sys:String>
+    <sys:String x:Key="SecDnsTxtBx">DN SECONDAIRE :</sys:String>
+    <sys:String x:Key="PingTxtBx">PING ADRESSE IP</sys:String>
+    <sys:String x:Key="ScanTxtBx">SCAN RESEAU</sys:String>
+    <sys:String x:Key="MtuTxtBx">CHECK-UP TAILLE PAQUETS</sys:String>
+    <sys:String x:Key="ArpTxtBx">CACHE ARP</sys:String>
+    <sys:String x:Key="TracertTxtBx">TRACEROUTE</sys:String>
+    <sys:String x:Key="RouteTxtBx">TABLE DE ROUTAGE</sys:String>
+    <sys:String x:Key="NetworkMaskCalcTxtBx">CALCULATRICE  DE MASQUE</sys:String>
+    <sys:String x:Key="NettingTxtBx">SUBNET/SUPERNET</sys:String>
+    <sys:String x:Key="NetworkTxtBx">CALCULATRICE DE RESEAU</sys:String>
+    <sys:String x:Key="ThemeColorTxtBx">SELCTION COULEUR ET THEME</sys:String>
+    <sys:String x:Key="LanguageTxtBx">SELECTION LANGUE</sys:String>
+
+    <!-- ShowFileDialog -->
+    <sys:String x:Key="sfdTitle1">Exporter paramètres vers</sys:String>
+    <sys:String x:Key="sfdTitle2">Exporter configuration vers</sys:String>
+    <sys:String x:Key="sfdTitle3">Importer configuration depuis</sys:String>
+    <sys:String x:Key="sfdTitle4">Exporter résultats des commandes vers</sys:String>
+    <sys:String x:Key="sfdDefExt1">netstg</sys:String>
+    <sys:String x:Key="sfdDefExt2">netcfg</sys:String>
+    <sys:String x:Key="sfdDefExt3">cmdres</sys:String>
+    <sys:String x:Key="sfdFilter1">NetManager - parmètres réseau actules (*.netstg)|*.netstg</sys:String>
+    <sys:String x:Key="sfdFilter2">NetManager - paramètres réseau personnalisés (*.netcfg)|*.netcfg</sys:String>
+    <sys:String x:Key="sfdFilter3">NetManager - résultats des commandes (*.cmdres)|*.cmdres</sys:String>
+    <sys:String x:Key="sfdFilterIndex">1</sys:String>
+    <sys:String x:Key="savingNetSettingsMessage1">Les paramètres ont été sauvegardé dans</sys:String>
+    <sys:String x:Key="exportCmdResultsMessage1">Les résultats des commandes ont été exporté dans</sys:String>
+    <sys:String x:Key="exportCmdResultsMessage2">Abandon de l'exportation des résultats des commandes</sys:String>
+    <sys:String x:Key="cmdResultsTitle">NetManager - Résultats des commandes</sys:String>
+    <sys:String x:Key="netSettingsMessage">. Souhaitez-vous ouvrir le fichier ?</sys:String>
+    <sys:String x:Key="savingNetSettingsMessage2">>Abandon de la sauvegarde des paramètres réseau</sys:String>
+    <sys:String x:Key="exportNetSettingsMessage1">Les paramètres personnalisés ont été exporté dans</sys:String>
+    <sys:String x:Key="exportNetSettingsMessage2">Abandon de l'exportation des paramètres personnalisés</sys:String>
+    <sys:String x:Key="importNetSettingsMessage1">Les paramètres personnalisés ont été importé depuis</sys:String>
+    <sys:String x:Key="netSettingsMessageTitle">NetManager - Paramètres réseau</sys:String>
+    <sys:String x:Key="errorResultsMessage">Une erreur est survenue. Veuillez réessayer.</sys:String>
+    <sys:String x:Key="errorResultsTitle">NetManager - Erreur dans la commande</sys:String>
+
+    <!-- Titre de la fenêtre -->
+    <sys:String x:Key="UITitle">NetManager - Sélection couleur et thème</sys:String>
+    <sys:String x:Key="ResultTitle">NetManager - Résultats des commandes</sys:String>
+    <sys:String x:Key="LanguageTitle">NetManager - Sélection de la langue</sys:String>
+    <sys:String x:Key="MainTitle">NetManager</sys:String>
+
+    <!-- Menu de notification -->
+    <sys:String x:Key="showFromTray">Ouvrir l'application</sys:String>
+    <sys:String x:Key="quitFromTray">Quitter l'application</sys:String>
+
+    <!-- Résultats -->
+    <sys:String x:Key="ipFamilyError">IPv6 non supporté</sys:String>
+    <sys:String x:Key="ipError">Erreur de saisie: impossible d'utiliser l'adresse IP</sys:String>
+    <sys:String x:Key="maskError">Erreur de saisie: impossible d'utiliser le masque</sys:String>
+    <sys:String x:Key="pingHeader">================================================PING ADRESSE IP ==============================================</sys:String>
+    <sys:String x:Key="pingSuccess">Ping réussi sur l'adresse IP</sys:String>
+    <sys:String x:Key="pingNotSuccess">Ping impossible sur l'adresse IP</sys:String>
+    <sys:String x:Key="scanHeader">================================================SCAN RESEAU================================================</sys:String>
+    <sys:String x:Key="scanSuccess">répond</sys:String>
+    <sys:String x:Key="scanNotSuccess">ne répond pas</sys:String>
+    <sys:String x:Key="scanStartIPError">Erreur de saisie: adresse IP de début</sys:String>
+    <sys:String x:Key="mtuHeader">================================================CHECKER TAILLE PAQUET=================================================</sys:String>
+    <sys:String x:Key="mtuSuccess">répond avec la taille de paquet:</sys:String>
+    <sys:String x:Key="mtuNotSuccess">ne répond pas avec la taille de paquet:</sys:String>
+    <sys:String x:Key="arpHeader">==================================================CACHE ARP==================================================</sys:String>
+    <sys:String x:Key="tracertHeader">=================================================TRACEROUTE=================================================</sys:String>
+    <sys:String x:Key="tracertError">La commande traceroute renvoi une erreur</sys:String>
+    <sys:String x:Key="routetableHeader">==================================================TABLE DE ROUTAGE=================================================</sys:String>
+    <sys:String x:Key="maskcalcHeader">==========================================CALCULATRICE MASQUE DE RESEAU==========================================</sys:String>
+    <sys:String x:Key="maskcalcCIDR">Le fomrat CIDR est</sys:String>
+    <sys:String x:Key="maskcalcDecimal">Le format décimal pointé est</sys:String>
+    <sys:String x:Key="maskcalLength">Erreur dans le préfixe CIDR. Le préfixe doit être entre 1 et 32</sys:String>
+    <sys:String x:Key="maskcalValue">Erreur de saisie: doit être au format CIDR ou décimal pointé</sys:String>
+    <sys:String x:Key="maskcalcError">Erreur de saisie: aucune valeur trouvé</sys:String>
+    <sys:String x:Key="subnetHeader">=============================================CALUCLATRICE DE SOUS RESEAU==============================================</sys:String>
+    <sys:String x:Key="subnetMessage1">a été découpé en</sys:String>
+    <sys:String x:Key="subnetMessage2">sous réseau</sys:String>
+    <sys:String x:Key="subnetMessage3">Tout les sous réseaux:</sys:String>
+    <sys:String x:Key="subnetAddress">Adresse de sous réseau:</sys:String>
+    <sys:String x:Key="subnetMask">Masque:</sys:String>
+    <sys:String x:Key="subnetWildcard">Masque générique:</sys:String>
+    <sys:String x:Key="subnetFirstUsable">Première axdresse utilisable:</sys:String>
+    <sys:String x:Key="subnetLastUsable">Dernière adresse utilisable:</sys:String>
+    <sys:String x:Key="subnetHostPerSubnet">Hôte par sous réseau:</sys:String>
+    <sys:String x:Key="subnetBroadcast">Adresse de diffusion:</sys:String>
+    <sys:String x:Key="subnetTotalHost">Total d'hôtes utilisables:</sys:String>
+    <sys:String x:Key="subnetMaskError">Erreur de saisie: même masque</sys:String>
+    <sys:String x:Key="supernetHeader">=============================================CALCULATRICE DE SUPER RESEAU============================================</sys:String>
+    <sys:String x:Key="supernetAddress">Adresse de super réseau:</sys:String>
+    <sys:String x:Key="supernetMask">Masque:</sys:String>
+    <sys:String x:Key="supernetWildcard">Masque générique:</sys:String>
+    <sys:String x:Key="supernetFirstUsable">Première axdresse utilisable:</sys:String>
+    <sys:String x:Key="supernetLastUsable">Dernière adresse utilisable:</sys:String>
+    <sys:String x:Key="supernetBroadcast">Adresse de diffusion:</sys:String>
+    <sys:String x:Key="supernetTotalHost">Total d'hôtes utilisables:</sys:String>
+    <sys:String x:Key="netCalcHeader">==============================================CALCULATRICE DE RESEAU============================================</sys:String>
+    <sys:String x:Key="netCalcAddress">Adresse de réseau:</sys:String>
+    <sys:String x:Key="netCalcMask">Masque:</sys:String>
+    <sys:String x:Key="netCalcWildcard">Masque générique:</sys:String>
+    <sys:String x:Key="netCalcFirstUsable">Première axdresse utilisable:</sys:String>
+    <sys:String x:Key="netCalcLastUsable">Dernière adresse utilisable:</sys:String>
+    <sys:String x:Key="netCalcBroadcast">Adresse de diffusion:</sys:String>
+    <sys:String x:Key="netCalcTotalHost">Total d'hôtes utilisables:</sys:String>
+
+
+
+</ResourceDictionary>

@@ -1,0 +1,635 @@
+﻿<mdExt:MaterialWindow x:Name="MainWindow1" x:Class="NetManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mdExt="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        xmlns:local="clr-namespace:NetManager"
+        mc:Ignorable="d"
+        Height="525" Width="800" ResizeMode="CanMinimize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}" StateChanged="Window_StateChanged" Loaded="LoadedWindow" Closed="ClosedWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border x:Name="WindowBorder" Grid.ColumnSpan="3" Background="#FF9C27B0">
+            <StackPanel Orientation="Horizontal" >
+                <Button BorderBrush="#00707070" Foreground="{DynamicResource MaterialDesignBackground}" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Width="77" FontSize="16" Click="Menu_Click" Background="#009C27B0">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#FF9C27B0"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <materialDesign:PackIcon x:Name="NavIcon" Kind="Menu" Width="57" Height="35" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"/>
+                    </Button.Content>
+                </Button>
+                <TextBlock x:Name="WindowTitle" Text="{DynamicResource MainTitle}" Foreground="White" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" FontStyle="Italic" FontSize="23" Width="250" Height="33" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        <materialDesign:DrawerHost x:Name="DrawerHost" Grid.Row="1" Grid.ColumnSpan="2">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel x:Name="navigationPanel" Background="{DynamicResource MaterialDesignPaper}">
+                    <!-- Boutons de navigation -->
+                    <Button x:Name="netConfigBtn" Content="{DynamicResource NetConfig}" TabIndex="48" Click="NetConfigTab_Click" Margin="0,10,0,0" />
+                    <Button x:Name="changeConfigBtn" Content="{DynamicResource ChangeConfig}" TabIndex="49" Click="ChangeConfigTab_Click" Margin="0,10,0,0" />
+                    <Button x:Name="netCommandsBtn" Content="{DynamicResource NetCommands}" TabIndex="50" Cursor="Hand" Click="NetCommandsTab_Click" Margin="0,10,0,0" />
+                    <Button x:Name="netCalcBtn" Content="{DynamicResource Calculator}" TabIndex="51" Cursor="Hand" Click="CalculatorTab_Click" Margin="0,10,0,0"/>
+                    <Button x:Name="settings" BorderBrush="#00707070" Foreground="{DynamicResource MaterialDesignBackground}" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Width="50" FontSize="16" Background="#009C27B0" HorizontalAlignment="Left" Margin="0,227,0,0" VerticalAlignment="Bottom" MouseEnter="RotateTo45Degrees" MouseLeave="RotateTo0Degrees" Click="SettingsTab_Click">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="#FF9C27B0"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <materialDesign:PackIcon x:Name="SettingsIcon" Kind="Settings" Width="50" Height="35" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="White"/>
+                    </Button>
+
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <!-- Conteneur pour le contenu principal -->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Rectangle x:Name="Overlay" Fill="{DynamicResource MaterialDesignFlatButtonRipple}" Opacity="0"/>
+                <TabControl x:Name="TabControl1">
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem1Canvas">
+                            <TextBox x:Name="ipAddressTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource IpAddressTxtBx}" Canvas.Top="39" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="1" Foreground="Black"/>
+                            <TextBox x:Name="subnetMaskTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource NetMaskTxtBx}" Canvas.Top="96" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="2" Foreground="Black"/>
+                            <TextBox x:Name="gatewayTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource DefGatewayTxtBx}" Canvas.Top="153" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="3" Foreground="Black"/>
+                            <TextBox x:Name="firstDnsTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource PrimDnsTxtBx}" Canvas.Top="210" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="4" Foreground="Black"/>
+                            <TextBox x:Name="secondDnsTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource SecDnsTxtBx}" Canvas.Top="267" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="5" Foreground="Black"/>
+                            <Button x:Name="shSettings" Content="{DynamicResource Settings}" Canvas.Left="220" Canvas.Top="324" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180" Height="38" Click="ShowNetSettings" TabIndex="6"/>
+                            <Button x:Name="exprtSettings" Content="{DynamicResource ExportSettings}" Canvas.Left="405" Canvas.Top="324" Width="180" Height="38" Click="ExportNetSettings" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="7"/>
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem2Canvas">
+                            <TextBox x:Name="ipAddressTxtBx2" IsReadOnly="True" CaretBrush="Transparent" Canvas.Left="215" TextWrapping="Wrap" Text="{DynamicResource IpAddressTxtBx}" Canvas.Top="17" Width="185" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Foreground="Black"/>
+                            <TextBox x:Name="subnetMaskTxtBx2" IsReadOnly="True" CaretBrush="Transparent" Canvas.Left="215" TextWrapping="Wrap" Text="{DynamicResource NetMaskTxtBx}" Canvas.Top="74" Width="185" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Foreground="Black"/>
+                            <TextBox x:Name="gatewayTxtBx2" IsReadOnly="True" CaretBrush="Transparent" Canvas.Left="215" TextWrapping="Wrap" Text="{DynamicResource DefGatewayTxtBx}" Canvas.Top="131" Width="185" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Foreground="Black"/>
+                            <TextBox x:Name="firstDnsTxtBx2" IsReadOnly="True" CaretBrush="Transparent" Canvas.Left="215" TextWrapping="Wrap" Text="{DynamicResource PrimDnsTxtBx}" Canvas.Top="188" Width="185" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Foreground="Black"/>
+                            <TextBox x:Name="secondDnsTxtBx2" IsReadOnly="True" CaretBrush="Transparent" Canvas.Left="215" TextWrapping="Wrap" Text="{DynamicResource SecDnsTxtBx}" Canvas.Top="245" Width="185" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" Foreground="Black"/>
+                            <Button x:Name="setStaticSettings" Content="{DynamicResource StaticSettings}" Canvas.Left="205" Canvas.Top="288" HorizontalAlignment="Center" VerticalAlignment="Top" Width="190" Height="38" Click="SetStaticSettings" TabIndex="13"/>
+                            <Button x:Name="setDynamicSettings" Content="{DynamicResource DynamicSettings}" Canvas.Left="400" Canvas.Top="288" Width="190" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" Click="SetDynamicSettings" TabIndex="14"/>
+                            <Button x:Name="exportSettings" Content="{DynamicResource ExportSettings}" Canvas.Left="205" Canvas.Top="331" Width="190" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ExportConfig" TabIndex="15"/>
+                            <Button x:Name="importSettings" Content="{DynamicResource ImportSettings}" Canvas.Left="400" Canvas.Top="331" Width="190" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ImportConfig" TabIndex="16"/>
+                            <TextBox x:Name="ipAddrTxtBx" Canvas.Left="400" TextWrapping="Wrap" Canvas.Top="17" Width="190" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="8"/>
+                            <TextBox x:Name="netMaskTxtBx" Canvas.Left="400" TextWrapping="Wrap" Canvas.Top="74" Width="190" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="9"/>
+                            <TextBox x:Name="defGatewayTxtBx" Canvas.Left="400" TextWrapping="Wrap" Canvas.Top="131" Width="190" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="10"/>
+                            <TextBox x:Name="primDnsTxtBx" Canvas.Left="400" TextWrapping="Wrap" Canvas.Top="188" Width="190" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="11"/>
+                            <TextBox x:Name="secDnsTxtBx" Canvas.Left="400" TextWrapping="Wrap" Canvas.Top="245" Width="190" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="12"/>
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem3Canvas">
+                            <TextBox x:Name="pingTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource PingTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="10" Canvas.Top="45" HorizontalAlignment="Left" VerticalAlignment="Center" Width="233" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="ipAddrTxtBx1" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="88" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" BorderBrush="#88000000" TabIndex="17">
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource IpAddressLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="timeoutTxtBx" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="131" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="18">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource TimeoutLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="repetitionTxtBx" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="174" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Center" VerticalAlignment="Top" TabIndex="19">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource RepetitionLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="18"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="pingBtn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="233" Height="38" Canvas.Left="10" Canvas.Top="217" Content="{DynamicResource Ping}" Click="StartPing" TabIndex="20"/>
+                            <TextBox x:Name="scanningTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource ScanTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="260" Canvas.Top="45" Width="280" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="firstHostTxtBx" Canvas.Left="260" TextWrapping="Wrap" Canvas.Top="88" Width="280" FontFamily="Roboto Condensed" BorderThickness="0 0 0 1" BorderBrush="#88000000" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="21">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource FirstHostLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="lastHostTxtBx" Canvas.Left="260" TextWrapping="Wrap" Canvas.Top="131" Width="280" FontFamily="Roboto Condensed" BorderThickness="0 0 0 1" BorderBrush="#88000000" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="22">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource LastHostLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="scanNetwrkBtn" Width="280" Height="38" Canvas.Left="260" Canvas.Top="217" Content="{DynamicResource Scan}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartScan" TabIndex="23"/>
+                            <TextBox x:Name="mtuCheckTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource MtuTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="557" Canvas.Top="47" Width="233" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black"/>
+                            <TextBox x:Name="ipAddrTxtBx2" Canvas.Left="557" TextWrapping="Wrap" Canvas.Top="90" Width="231" FontFamily="Roboto Condensed" BorderThickness="0 0 0 1" BorderBrush="#88000000" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="24">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource IpAddressLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="firstValueTxtBx" Canvas.Left="557" TextWrapping="Wrap" Canvas.Top="135" Width="233" FontFamily="Roboto Condensed" BorderThickness="0 0 0 1" BorderBrush="#88000000" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="25">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource FirstValLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="lastValueTxtBx" Canvas.Left="557" TextWrapping="Wrap" Canvas.Top="178" Width="233" FontFamily="Roboto Condensed" BorderThickness="0 0 0 1" BorderBrush="#88000000" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="26">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource LastValLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="chkMTUBtn" Width="233" Height="38" Canvas.Left="557" Canvas.Top="219" Content="{DynamicResource Mtu}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="StartMTUCheck" TabIndex="27"/>
+                            <Button x:Name="nxtMenuBtn" Content="{DynamicResource NextPage}" Canvas.Left="557" Canvas.Top="305" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="233" TabIndex="28" Click="NextPage"/>
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem4Canvas">
+                            <TextBox x:Name="arpCacheTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource ArpTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="10" Canvas.Top="45" Width="233" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
+                            <Button x:Name="showARPCacheBtn" Width="233" Height="38" Canvas.Left="10" Canvas.Top="131" Content="{DynamicResource Arp}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ShowARPCache" TabIndex="29"/>
+                            <TextBox x:Name="tracerouteTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource TracertTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="283" Canvas.Top="45" Width="234" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="ipAddrTxtBx3" Canvas.Left="283" TextWrapping="Wrap" Canvas.Top="88" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="30">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource IpAddressLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="tracerouteBtn" Width="234" Height="38" Canvas.Left="282" Canvas.Top="131" Content="{DynamicResource Tracert}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartTraceroute" TabIndex="31"/>
+                            <TextBox x:Name="routingTableTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource RouteTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="556" Canvas.Top="45" Width="234" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <Button x:Name="showRoutingTableBtn" Width="234" Height="38" Canvas.Left="556" Canvas.Top="131" Content="{DynamicResource Route}" HorizontalAlignment="Left" VerticalAlignment="Center" Click="ShowRouteTable" TabIndex="32"/>
+                            <Button x:Name="prvMenuBtn" Content="{DynamicResource PreviousPage}" Height="38" Canvas.Top="303" Width="233" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="10" TabIndex="33" Click="PreviousPage" />
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem5Canvas">
+                            <TextBox x:Name="networkMaskCalcTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource NetworkMaskCalcTxtBx}" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="44" Canvas.Left="10" Canvas.Top="45" Width="233" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="ntwrkMaskTxtBx1" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="94" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Center" VerticalAlignment="Center" TabIndex="34">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NetworkMaskLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="ntwrkMaskCalcBtn" Content="{DynamicResource netMaskCalc}" Height="38" Canvas.Top="223" Width="233" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Canvas.Left="10" Click="StartMaskCalc" TabIndex="35"/>
+                            <TextBox x:Name="nettingTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource NettingTxtBx}" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="44" Canvas.Left="284" Canvas.Top="45" Width="232" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="ntwrkTxtBx" Canvas.Left="282" TextWrapping="Wrap" Canvas.Top="94" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="36">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NetworkAddressLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="18"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="oldNtwrkMaskTxtBx" Canvas.Left="281" TextWrapping="Wrap" Canvas.Top="137" Width="234" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="37">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NetworkMaskLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="newNtwrkMaskTxtBx" Canvas.Left="285" TextWrapping="Wrap" Canvas.Top="180" Width="232" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="38">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NewNetworkMaskLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="nettingCalcBtn" Content="{DynamicResource nettingCalc}" Height="38" Canvas.Left="278" Canvas.Top="223" Width="246" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="StartSubnetSupernet" TabIndex="39"/>
+                            <TextBox x:Name="ntwrkCalcTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource NetworkTxtBx}" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="44" Canvas.Left="557" Canvas.Top="45" Width="233" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                            <TextBox x:Name="ipAddrTxtBx4" Canvas.Left="557" TextWrapping="Wrap" Canvas.Top="94" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="40">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NetworkAddressLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="18"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <TextBox x:Name="ntwrkMaskTxtBx2" Canvas.Left="557" TextWrapping="Wrap" Canvas.Top="137" Width="233" BorderThickness="0 0 0 1" FontFamily="Roboto Condensed" FontSize="24" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="38" BorderBrush="#88000000" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="41">
+                                <TextBox.Style>
+                                    <Style xmlns:sys="clr-namespace:System;assembly=mscorlib" TargetType="{x:Type TextBox}">
+                                        <Style.Resources>
+                                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label Content="{DynamicResource NetworkMaskLabelContent}" Foreground="LightGray" FontFamily="Roboto Condensed" FontSize="20"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{DynamicResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                            <EventTrigger RoutedEvent="UIElement.LostFocus">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" Duration="0:0:0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <Button x:Name="ntwrkCalcBtn" Content="{DynamicResource networkCalc}" Height="38" Canvas.Left="557" Canvas.Top="223" Width="233" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" Click="StartNetworkCalc" TabIndex="42"/>
+                        </Canvas>
+                    </TabItem>
+                    <TabItem Visibility="Hidden">
+                        <Canvas x:Name="tabItem6Canvas">
+                            <TextBox x:Name="themeColorTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource ThemeColorTxtBx}" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="44" Canvas.Left="222" Canvas.Top="60" Width="356" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black"/>
+                            <Button x:Name="themeColorWizBtn" Content="{DynamicResource ThemeColorWiz}" Height="38" Canvas.Left="224" Canvas.Top="119" Width="356" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" TabIndex="43" Click="StartThemeAndColorWizard"/>
+                            <TextBox x:Name="languageTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource LanguageTxtBx}" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="44" Canvas.Left="222" Canvas.Top="172" Width="356" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black"/>
+                            <Button x:Name="languageWizBtn" Content="{DynamicResource LangWiz}" Height="38" Canvas.Left="224" Canvas.Top="221" Width="354" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" TabIndex="44" Click="StartLanguageWizard"/>
+                            <Button x:Name="showTutorialBtn" Content="{DynamicResource Tutorial}" Height="38" Canvas.Left="562" Canvas.Top="333" Width="228" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="46"/>
+                            <Button x:Name="openProjectWebsiteBtn" Content="{DynamicResource ProjWebsite}" Height="38" Canvas.Left="10" Canvas.Top="333" Width="228" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Center" TabIndex="45" Click="OpenProjectWebsite"/>
+                        </Canvas>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </materialDesign:DrawerHost>
+    </Grid>
+</mdExt:MaterialWindow>

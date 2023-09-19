@@ -1,0 +1,58 @@
+﻿<mdExt:MaterialWindow x:Class="NetManager.ThemeAndColor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mdExt="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+        xmlns:local="clr-namespace:NetManager"
+        Background="{DynamicResource MaterialDesignPaper}"
+                Height="359" Width="522" ResizeMode="CanMinimize" Closed="OnClosed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border x:Name="WindowBorder" Grid.ColumnSpan="3" Background="#FF9C27B0" Height="30">
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock x:Name="WindowTitle" Text="{StaticResource UITitle}" Foreground="{DynamicResource MaterialDesignBackground}" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" FontStyle="Italic" FontSize="16" Width="288" Height="20" VerticalAlignment="Center" Margin="20,0,0,0"/>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <TabControl x:Name="MainTabControl">
+                <TabItem Visibility="Hidden">
+                    <Canvas>
+                        <Button Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="230" BorderBrush="#009C27B0" Background="#FFFAFAFA" Height="158" Content="{DynamicResource LightTheme}" Foreground="Black" Click="LightTheme"/>
+                        <Button Canvas.Left="282" Canvas.Top="10" Height="158" Width="230" HorizontalAlignment="Center" VerticalAlignment="Top" Background="#FF303030" BorderBrush="#009C27B0" Foreground="White" Content="{DynamicResource DarkTheme}" Click="DarkTheme"/>
+                        <Button x:Name="nextPageBtn" Content="{StaticResource NextPage}" Height="32" Canvas.Left="324" Canvas.Top="187" Width="188" HorizontalAlignment="Center" VerticalAlignment="Top" Click="NextPage"/>
+                        <Button x:Name="exitPg1Btn" Content="{StaticResource Exit}" Height="32" Canvas.Left="10" Canvas.Top="187" Width="188" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ExitUIConfig"/>
+                    </Canvas>
+                </TabItem>
+                <TabItem Visibility="Hidden">
+                    <Canvas Margin="0,-48,0,0">
+                        <Button Canvas.Left="350" Canvas.Top="163" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Content="{DynamicResource Teal}" Background="#FF009688" BorderBrush="#009C27B0" Click="TealColor" Foreground="White"/>
+                        <Button Canvas.Left="350" Canvas.Top="126" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" BorderBrush="#009C27B0" Background="#FFF44336" Content="{DynamicResource Red}" Click="RedColor" Foreground="White"/>
+                        <Button Canvas.Left="350" Canvas.Top="52" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Content="{DynamicResource Pink}" Background="#FFE91E63" BorderBrush="#009C27B0" Click="PinkColor" Foreground="White"/>
+                        <Button Canvas.Left="350" Canvas.Top="89" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Content="{DynamicResource Purple}" Background="#FF9C27B0" BorderBrush="#009C27B0" Foreground="White" Click="PurpleColor"/>
+                        <Button Canvas.Left="180" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center" Width="164" BorderBrush="#009C27B0" Background="#FF3F51B5" Content="{DynamicResource Indigo}" Click="IndigoColor" Foreground="White"/>
+                        <Button Canvas.Left="180" Canvas.Top="163" HorizontalAlignment="Left" VerticalAlignment="Center" Width="164" Content="{DynamicResource Grey}" Background="#FF9E9E9E" BorderBrush="#009C27B0" Click="GrayColor" Foreground="White"/>
+                        <Button Canvas.Left="180" Canvas.Top="126" HorizontalAlignment="Left" VerticalAlignment="Center" Width="164" BorderBrush="#009C27B0" Background="#FF4CAF50" Content="{DynamicResource Green}" Click="GreenColor" Foreground="White"/>
+                        <Button Canvas.Left="180" Canvas.Top="89" HorizontalAlignment="Left" VerticalAlignment="Center" Width="164" Content="{DynamicResource DeepPurple}" Background="#FF673AB7" BorderBrush="#009C27B0" Click="DeepPurpleColor" Foreground="White"/>
+                        <Button Canvas.Left="180" Canvas.Top="52" HorizontalAlignment="Left" VerticalAlignment="Center" Width="164" BorderBrush="#00FF5722" Background="#FFFF5722" Content="{DynamicResource DeepOrange}" Click="DeepOrangeColor" Foreground="White"/>
+                        <Button Canvas.Left="10" Canvas.Top="52" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Background="#FFFFC107" BorderBrush="#009C27B0" Foreground="Black" Content="{DynamicResource Amber}" Click="AmberColor"/>
+                        <Button Canvas.Left="10" Canvas.Top="89" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Background="#FF2196F3" BorderBrush="#009C27B0" Content="{DynamicResource Blue}" Click="BlueColor" Foreground="White"/>
+                        <Button Canvas.Left="10" Canvas.Top="163" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Content="{DynamicResource Brown}" Background="#FF795548" BorderBrush="#009C27B0" Click="BrownColor" Foreground="White"/>
+                        <Button Canvas.Left="10" Canvas.Top="126" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" BorderBrush="#009C27B0" Background="#FF607D8B" Content="{DynamicResource BlueGrey}" Click="BlueGrayColor" Foreground="White"/>
+                        <Button Canvas.Left="10" Canvas.Top="200" HorizontalAlignment="Left" VerticalAlignment="Center" Width="163" Content="{DynamicResource Cyan}" Background="#FF03A9F4" BorderBrush="#009C27B0" Click="CyanColor" Foreground="White"/>
+                        <Button x:Name="previousPageBtn" Content="{StaticResource PreviousPage}" Height="32" Canvas.Left="324" Canvas.Top="237" Width="188" Click="PreviousPage" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Button x:Name="exitPg2Btn" Content="{StaticResource Exit}"  Height="32" Canvas.Left="10" Canvas.Top="237" Width="188" Click="ExitUIConfig" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    </Canvas>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</mdExt:MaterialWindow>
