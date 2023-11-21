@@ -1282,6 +1282,7 @@ namespace NetManager
         private void OpenProjectWebsite(object sender, RoutedEventArgs e)
         {
             string url = "https://github.com/L-Dlbcq/NetManager";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
     }
 }
