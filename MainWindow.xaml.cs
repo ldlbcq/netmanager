@@ -1281,7 +1281,7 @@ namespace NetManager
 
         private void OpenProjectWebsite(object sender, RoutedEventArgs e)
         {
-            string url = ""
+            string url = "";
         }
     }
 }

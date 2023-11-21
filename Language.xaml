@@ -27,7 +27,7 @@
             <Canvas>
                 <Button x:Name="setFrenchBtn" Canvas.Left="266" Canvas.Top="123" HorizontalAlignment="Center" Height="67" VerticalAlignment="Top" Width="246" Click="SetLangToFrench" Content="{DynamicResource French}"/>
                 <Button x:Name="setEnglishBtn" Canvas.Left="10" Canvas.Top="123" HorizontalAlignment="Center" VerticalAlignment="Top" Width="251" Height="67" Click="SetLangToEnglish" Content="{DynamicResource English}"/>
-                <Button x:Name="exitBtn" Canvas.Left="412" Canvas.Top="249" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Click="test" Content="{DynamicResource Exit}"/>
+                <Button x:Name="exitBtn" Canvas.Left="412" Canvas.Top="249" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Click="LangClose" Content="{DynamicResource Exit}"/>
             </Canvas>
         </Grid>
     </Grid>

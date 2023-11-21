@@ -20,6 +20,7 @@ using System.Windows.Controls.Primitives;
 using System.ComponentModel;
 using System.Runtime;
 using System.Media;
+using System.Windows.Automation;
 
 namespace NetManager
 {
@@ -34,8 +35,8 @@ namespace NetManager
             mainWindow = (MainWindow?)Application.Current.MainWindow;
             results = Application.Current.Windows.OfType<Results>().FirstOrDefault();
             language = Application.Current.Windows.OfType<Language>().FirstOrDefault();
-            mainWindow.IsEnabled = false;
             LoadUserSettings();
+            mainWindow.IsEnabled = false;
         }
 
         private Results? results;
@@ -665,10 +666,15 @@ namespace NetManager
             paletteHelper.SetTheme(theme);
         }
 
+        private void MaterialWindow_Closed(object sender, EventArgs e)
+        {
+
+        }
+
         private void OnClosed(object sender, EventArgs e)
         {
             mainWindow.IsEnabled = true;
+            Close();
         }
-
     }
 }

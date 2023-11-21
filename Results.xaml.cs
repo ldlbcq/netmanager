@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -28,18 +29,14 @@ namespace NetManager
         {
             InitializeComponent();
             LoadUserSettings();
-            mainWindow.IsEnabled = false;
-
         }
 
         private string configFilePath = "config.cfg";
         private MainWindow mainWindow;
-        private ThemeAndColor themeAndColor;
-        private Language language;
 
         private void ExitResult(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void ExportResults(object sender, RoutedEventArgs e)
@@ -142,11 +139,9 @@ namespace NetManager
             exitBtn.Foreground = new SolidColorBrush(color);
             exprtCmdRsltBtn.Foreground = new SolidColorBrush(color);
         }
-
-        private void OnClosed(object sender, EventArgs e)
+        private void OnClosed (object sender, EventArgs e)
         {
-            mainWindow.IsEnabled = true;
-            themeAndColor.IsEnabled = true;
+            Close();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -36,12 +37,8 @@ namespace NetManager
 
         private void OnClosed(object sender, EventArgs e)
         {
+            Close();
             mainWindow.IsEnabled = true;
-        }
-
-        private void test(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void SetLangToFrench(object sender, RoutedEventArgs e)
@@ -148,6 +145,12 @@ namespace NetManager
             setFrenchBtn.Foreground = new SolidColorBrush(color);
             setEnglishBtn.Foreground = new SolidColorBrush(color);
             exitBtn.Foreground = new SolidColorBrush (color);
+        }
+
+        private void LangClose(object sender, RoutedEventArgs e)
+        {
+            mainWindow.IsEnabled = true;
+            Close();
         }
     }
 }
