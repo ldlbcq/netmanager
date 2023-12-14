@@ -59,11 +59,12 @@
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <StackPanel x:Name="navigationPanel" Background="{DynamicResource MaterialDesignPaper}">
                     <!-- Boutons de navigation -->
+                    <Button x:Name="chooseInterfaceBtn" Content="{DynamicResource ChooseInterface}" TabIndex="48" Click="ChooseInterfaceTab_Click" Margin="0,10,0,0" />
                     <Button x:Name="netConfigBtn" Content="{DynamicResource NetConfig}" TabIndex="48" Click="NetConfigTab_Click" Margin="0,10,0,0" />
                     <Button x:Name="changeConfigBtn" Content="{DynamicResource ChangeConfig}" TabIndex="49" Click="ChangeConfigTab_Click" Margin="0,10,0,0" />
                     <Button x:Name="netCommandsBtn" Content="{DynamicResource NetCommands}" TabIndex="50" Cursor="Hand" Click="NetCommandsTab_Click" Margin="0,10,0,0" />
                     <Button x:Name="netCalcBtn" Content="{DynamicResource Calculator}" TabIndex="51" Cursor="Hand" Click="CalculatorTab_Click" Margin="0,10,0,0"/>
-                    <Button x:Name="settings" BorderBrush="#00707070" Foreground="{DynamicResource MaterialDesignBackground}" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Width="50" FontSize="16" Background="#009C27B0" HorizontalAlignment="Left" Margin="0,227,0,0" VerticalAlignment="Bottom" MouseEnter="RotateTo45Degrees" MouseLeave="RotateTo0Degrees" Click="SettingsTab_Click">
+                    <Button x:Name="settings" BorderBrush="#00707070" Foreground="{DynamicResource MaterialDesignBackground}" FontFamily="{DynamicResource MaterialDesignFont}" FontWeight="Bold" Width="50" FontSize="16" Background="#009C27B0" HorizontalAlignment="Left" Margin="0,175,0,0" VerticalAlignment="Bottom" MouseEnter="RotateTo45Degrees" MouseLeave="RotateTo0Degrees" Click="SettingsTab_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="#FF9C27B0"/>
@@ -92,6 +93,11 @@
             <Grid Grid.Row="1" Grid.Column="1">
                 <Rectangle x:Name="Overlay" Fill="{DynamicResource MaterialDesignFlatButtonRipple}" Opacity="0"/>
                 <TabControl x:Name="TabControl1">
+                    <TabItem Visibility="Hidden">
+                        <StackPanel x:Name="tabItemStackPanel">
+                            <TextBlock x:Name="interfaceTxtBx" Text="{DynamicResource InterfaceTxtBx}" FontFamily="Roboto Condensed" FontSize="20" VerticalAlignment="Center" Height="26" Width="325" TextAlignment="Center"/>
+                        </StackPanel>
+                    </TabItem>
                     <TabItem Visibility="Hidden">
                         <Canvas x:Name="tabItem1Canvas">
                             <TextBox x:Name="ipAddressTxtBx1" Canvas.Left="220" TextWrapping="Wrap" Text="{DynamicResource IpAddressTxtBx}" Canvas.Top="39" Width="360" FontFamily="Roboto Condensed" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" TabIndex="1" Foreground="Black"/>

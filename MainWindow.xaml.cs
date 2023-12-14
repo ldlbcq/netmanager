@@ -17,6 +17,9 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
+using System.Security.Policy;
+using RadioButton = System.Windows.Controls.RadioButton;
+using System.Linq;
 
 namespace NetManager
 {
@@ -26,6 +29,7 @@ namespace NetManager
     public partial class MainWindow : MaterialWindow
     {
         private string configFilePath = "config.cfg";
+        private string selectedInterfaceId;
         private TrayIcon trayIcon;
         public static MainWindow? Instance { get; private set; }
 
@@ -33,6 +37,7 @@ namespace NetManager
         {
             InitializeComponent();
             LoadUserSettings();
+            LoadNetworkInterfaces();
             Instance = this;
         }
 
@@ -73,33 +78,39 @@ namespace NetManager
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void NetConfigTab_Click(object sender, RoutedEventArgs e)
+        private void ChooseInterfaceTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 0;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void ChangeConfigTab_Click(object sender, RoutedEventArgs e)
+        private void NetConfigTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 1;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void NetCommandsTab_Click(object sender, RoutedEventArgs e)
+        private void ChangeConfigTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 2;
             ToggleDrawerAndAnimateIcon();
         }
 
+        private void NetCommandsTab_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl1.SelectedIndex = 3;
+            ToggleDrawerAndAnimateIcon();
+        }
+
         private void CalculatorTab_Click(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 4;
+            TabControl1.SelectedIndex = 5;
             ToggleDrawerAndAnimateIcon();
         }
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 5;
+            TabControl1.SelectedIndex = 6;
             ToggleDrawerAndAnimateIcon();
         }
 
@@ -127,6 +138,90 @@ namespace NetManager
 
         #endregion
 
+        #region LoadNetworkInterfaces
+        private void LoadNetworkInterfaces()
+        {
+            // Récupérer toutes les interfaces réseau
+            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            // Utiliser le StackPanel existant
+            StackPanel stackPanel = tabItemStackPanel;
+
+            foreach (NetworkInterface netInterface in networkInterfaces)
+            {
+                // Filtrer les interfaces virtuelles, les interfaces de boucle logicielle et Bluetooth
+                if (!IsVirtualInterface(netInterface) && !IsLoopbackInterface(netInterface) && !IsBluetoothInterface(netInterface))
+                {
+                    string formattedMacAddress = BitConverter.ToString(netInterface.GetPhysicalAddress().GetAddressBytes()).Replace("-", ":");
+
+                    // Créer un bouton radio pour chaque interface non filtrée
+                    RadioButton radioButton = new RadioButton
+                    {
+                        Content = $"{netInterface.Description} (MAC: {formattedMacAddress})",
+                        Tag = netInterface.Id,
+                        GroupName = "NetworkInterfaces",
+                        Margin = new Thickness(0, 5, 0, 5), // Ajustez la marge pour l'espacement
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = System.Windows.HorizontalAlignment.Center
+                    };
+
+                    // Gérer l'événement Checked pour savoir quel bouton radio a été sélectionné
+                    radioButton.Checked += RadioButton_Checked;
+
+                    // Ajouter le bouton radio au StackPanel existant
+                    stackPanel.Children.Add(radioButton);
+                }
+            }
+        }
+
+        private bool IsVirtualInterface(NetworkInterface networkInterface)
+        {
+            // Ajoutez des termes spécifiques pour identifier les interfaces virtuelles
+            string[] virtualInterfaceKeywords = { "VirtualBox", "VMware", "Hyper-V", "Microsoft Wi-Fi Direct Virtual Adapter", "Fortinet" };
+
+            foreach (string keyword in virtualInterfaceKeywords)
+            {
+                if (networkInterface.Description.Contains(keyword))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsLoopbackInterface(NetworkInterface networkInterface)
+        {
+            return networkInterface.NetworkInterfaceType == NetworkInterfaceType.Loopback;
+        }
+
+        private bool IsBluetoothInterface(NetworkInterface networkInterface)
+        {
+            // Ajoutez des termes spécifiques pour identifier les interfaces Bluetooth dans la description
+            string[] bluetoothInterfaceKeywords = { "Bluetooth", "BT" };
+
+            foreach (string keyword in bluetoothInterfaceKeywords)
+            {
+                if (networkInterface.Description.Contains(keyword))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // Logique à exécuter lorsque le bouton radio est sélectionné
+            RadioButton selectedRadioButton = (RadioButton)sender;
+            selectedInterfaceId = selectedRadioButton.Tag.ToString();
+
+            // Faites quelque chose avec l'interface sélectionnée (par exemple, affichez des informations à ce sujet)
+            MessageBox.Show($"Interface sélectionnée : {selectedRadioButton.Content}");
+        }
+        #endregion
+
         #region NetSettings
 
         private void ShowNetSettings(object sender, RoutedEventArgs e)
@@ -141,12 +236,11 @@ namespace NetManager
 
             foreach (NetworkInterface iface in interfaces)
             {
-                // Vérifie si la carte réseau est en cours d'utilisation par Hyper-V, VMware ou VirtualBox
-                if (iface.OperationalStatus == OperationalStatus.Up &&
+                if (iface.Id == selectedInterfaceId &&
+                    iface.OperationalStatus == OperationalStatus.Up &&
                     iface.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                    !iface.Description.Contains("Hyper-V") &&
-                    !iface.Description.Contains("VMware") &&
-                    !iface.Description.Contains("VirtualBox"))
+                    !IsVirtualInterface(iface) &&
+                    !IsBluetoothInterface(iface))
                 {
                     IPInterfaceProperties ipProperties = iface.GetIPProperties();
                     foreach (UnicastIPAddressInformation ip in ipProperties.UnicastAddresses)
@@ -169,10 +263,7 @@ namespace NetManager
                     int dnsCount = dnsAddresses.Count;
                     if (dnsCount > 0)
                     {
-                        // Affiche le premier serveur DNS dans la TextBox correspondante
                         firstDnsTxtBx1.Text = primDns + dnsAddresses[0].ToString();
-
-                        // Si un deuxième serveur DNS est disponible, l'affiche dans la TextBox correspondante
                         if (dnsCount > 1)
                         {
                             secondDnsTxtBx1.Text = secDns + dnsAddresses[1].ToString();
@@ -363,15 +454,13 @@ namespace NetManager
 
         private void SetStaticSettings(object sender, RoutedEventArgs e)
         {
-            foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
+            // Vérifier si une interface est sélectionnée
+            if (selectedInterfaceId != null)
             {
-                if (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet && adapter.OperationalStatus == OperationalStatus.Up
-                    || adapter.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && adapter.OperationalStatus == OperationalStatus.Up
-                    || adapter.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet && adapter.OperationalStatus == OperationalStatus.Up)
+                foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    if (!adapter.Name.Contains("vEthernet") || !adapter.Description.Contains("VMware")
-                        || !adapter.Description.Contains("VirtualBox") || !adapter.Description.Contains("Fortinet")
-                        || adapter.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
+                    // Vérifier si l'interface correspond à celle sélectionnée par le bouton radio
+                    if (adapter.Id == selectedInterfaceId)
                     {
                         ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
                         psi.UseShellExecute = true;
@@ -393,15 +482,13 @@ namespace NetManager
 
         private void SetDynamicSettings(object sender, RoutedEventArgs e)
         {
-            foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
+            // Vérifier si une interface est sélectionnée
+            if (selectedInterfaceId != null)
             {
-                if (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet && adapter.OperationalStatus == OperationalStatus.Up
-                    || adapter.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && adapter.OperationalStatus == OperationalStatus.Up
-                    || adapter.NetworkInterfaceType == NetworkInterfaceType.GigabitEthernet && adapter.OperationalStatus == OperationalStatus.Up)
+                foreach (NetworkInterface adapter in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    if (!adapter.Name.Contains("vEthernet") || !adapter.Description.Contains("VMware")
-                        || !adapter.Description.Contains("VirtualBox") || !adapter.Description.Contains("Fortinet")
-                        || adapter.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
+                    // Vérifier si l'interface correspond à celle sélectionnée par le bouton radio
+                    if (adapter.Id == selectedInterfaceId)
                     {
                         ProcessStartInfo psi = new ProcessStartInfo("cmd.exe");
                         psi.UseShellExecute = true;
@@ -707,7 +794,7 @@ namespace NetManager
         {
             string routetableHeader = Application.Current.Resources["routetableHeader"].ToString();
             Results results = new Results();
-            results.textResults.Text = routetableHeader + Environment.NewLine;
+            results.textResults.Text = routetableHeader + Environment.NewLine + Environment.NewLine;
             results.Show();
 
             await Task.Run(() =>
@@ -955,6 +1042,7 @@ namespace NetManager
         {
             string networkAddressString = ipAddrTxtBx4.Text;
             string subnetMaskString = ntwrkMaskTxtBx2.Text;
+            string netCalcHeader = Application.Current.Resources["netCalcHeader"].ToString();
             string netCalcAddress = Application.Current.Resources["netCalcAddress"].ToString();
             string netCalcMask = Application.Current.Resources["netCalcMask"].ToString();
             string netCalcWildcard = Application.Current.Resources["netCalcWildcard"].ToString();
@@ -974,7 +1062,7 @@ namespace NetManager
                 MessageBox.Show(ipError + " " + networkAddressString);
                 return;
             }
-
+            results.textResults.Text = netCalcHeader + Environment.NewLine;
             IPNetwork ipnetwork = IPNetwork.Parse(networkAddressString + "/" + Cidr);
             results.textResults.Text += netCalcAddress + " " + ipnetwork.Network + Environment.NewLine;
             results.textResults.Text += netCalcMask + " " + ipnetwork.Netmask + Environment.NewLine;
@@ -1078,10 +1166,13 @@ namespace NetManager
             SettingsIcon.Foreground = new SolidColorBrush(textColor);
             WindowTitle.Foreground = new SolidColorBrush(textColor);
 
+            chooseInterfaceBtn.Foreground = new SolidColorBrush(textColor);
             netConfigBtn.Foreground = new SolidColorBrush(textColor);
             changeConfigBtn.Foreground = new SolidColorBrush(textColor);
             netCommandsBtn.Foreground = new SolidColorBrush(textColor);
             netCalcBtn.Foreground = new SolidColorBrush(textColor);
+
+            interfaceTxtBx.Foreground = new SolidColorBrush(textColor);
 
             ipAddressTxtBx1.Foreground = new SolidColorBrush(textColor);
             subnetMaskTxtBx1.Foreground = new SolidColorBrush(textColor);
@@ -1166,10 +1257,13 @@ namespace NetManager
 
         public void UpdateTextBoxButtonTextColor(Color color)
         {
+            chooseInterfaceBtn.Foreground = new SolidColorBrush(color);
             netConfigBtn.Foreground = new SolidColorBrush(color);
             changeConfigBtn.Foreground = new SolidColorBrush(color);
             netCommandsBtn.Foreground = new SolidColorBrush(color);
             netCalcBtn.Foreground = new SolidColorBrush(color);
+
+            interfaceTxtBx.Foreground = new SolidColorBrush(color);
 
             ipAddressTxtBx1.Foreground = new SolidColorBrush(color);
             subnetMaskTxtBx1.Foreground = new SolidColorBrush(color);
@@ -1239,12 +1333,12 @@ namespace NetManager
 
         private void NextPage(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 3;
+            TabControl1.SelectedIndex = 4;
         }
 
         private void PreviousPage(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 2;
+            TabControl1.SelectedIndex = 3;
         }
 
         #region TrayIcon
@@ -1286,4 +1380,3 @@ namespace NetManager
         }
     }
 }
-

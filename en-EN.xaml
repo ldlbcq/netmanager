@@ -27,6 +27,7 @@
     <sys:String x:Key="Tutorial">SHOW TUTORIAL</sys:String>
     <sys:String x:Key="ProjWebsite">OPEN PROJECT WEBSITE</sys:String>
     <sys:String x:Key="Menu">MENU</sys:String>
+    <sys:String x:Key="ChooseInterface">CHOOSE INTERFACE</sys:String>
     <sys:String x:Key="NetConfig">NETWORK CONFIGURATION</sys:String>
     <sys:String x:Key="ChangeConfig">CHANGE CONFIGURATION</sys:String>
     <sys:String x:Key="NetCommands">NETWORK COMMANDS</sys:String>
@@ -75,6 +76,7 @@
 
     <!-- TextBox -->
     <sys:String x:Key="CustomClrTxtBx">CUSTOM COLOR :</sys:String>
+    <sys:String x:Key="InterfaceTxtBx">CHOOSE AN INTERFACE:</sys:String>
     <sys:String x:Key="IpAddressTxtBx">IP ADDRESS : </sys:String>
     <sys:String x:Key="NetMaskTxtBx">NETMASK : </sys:String>
     <sys:String x:Key="DefGatewayTxtBx">DEFAULT GATEWAY : </sys:String>
@@ -132,27 +134,28 @@
     <sys:String x:Key="ipFamilyError">IPv6 not supported</sys:String>
     <sys:String x:Key="ipError">Error in user input: impossible to use the following IP address</sys:String>
     <sys:String x:Key="maskError">Error in user input: impossible to use the following netmask</sys:String>
-    <sys:String x:Key="pingHeader">================================================PING ADDRESS=================================================</sys:String>
+    <sys:String x:Key="pingHeader">=============================================== PING ADDRESS ================================================</sys:String>
     <sys:String x:Key="pingSuccess">Ping sucessful on </sys:String>
     <sys:String x:Key="pingNotSuccess">Ping not sucessful on</sys:String>
-    <sys:String x:Key="scanHeader">================================================SCAN NETWORK================================================</sys:String>
+    <sys:String x:Key="scanHeader">=============================================== SCAN NETWORK ===============================================</sys:String>
     <sys:String x:Key="scanSuccess"> is responding</sys:String>
     <sys:String x:Key="scanNotSuccess"> is not responding</sys:String>
     <sys:String x:Key="scanStartIPError">Error in user input: starting IP address</sys:String>
-    <sys:String x:Key="mtuHeader">================================================MTU CHECKER=================================================</sys:String>
+    <sys:String x:Key="scanEndIPError">Error in user input: ending IP address</sys:String>
+    <sys:String x:Key="mtuHeader">=============================================== MTU CHECKER ================================================</sys:String>
     <sys:String x:Key="mtuSuccess"> is responding with packet size: </sys:String>
     <sys:String x:Key="mtuNotSuccess">is not responding with packet size:</sys:String>
-    <sys:String x:Key="arpHeader">==================================================ARP CACHE==================================================</sys:String>
-    <sys:String x:Key="tracertHeader">=================================================TRACEROUTE=================================================</sys:String>
+    <sys:String x:Key="arpHeader">================================================= ARP CACHE =================================================</sys:String>
+    <sys:String x:Key="tracertHeader">================================================ TRACEROUTE ================================================</sys:String>
     <sys:String x:Key="tracertError">Traceroute command return error</sys:String>
-    <sys:String x:Key="routetableHeader">==================================================ROUTE TABLE=================================================</sys:String>
-    <sys:String x:Key="maskcalcHeader">==========================================NETWORK MASK CALCULATOR==========================================</sys:String>
+    <sys:String x:Key="routetableHeader">================================================ ROUTING TABLE ===============================================</sys:String>
+    <sys:String x:Key="maskcalcHeader">========================================== NETWORK MASK CALCULATOR ==========================================</sys:String>
     <sys:String x:Key="maskcalcCIDR">CIDR format is</sys:String>
     <sys:String x:Key="maskcalcDecimal">Dot-decimal format is</sys:String>
     <sys:String x:Key="maskcalLength">Error in the CIDR prefix length. Prefix must be between 1 and 32</sys:String>
     <sys:String x:Key="maskcalValue">Error in user input. Input must be dot-decimal mask or CIDR prefix</sys:String>
     <sys:String x:Key="maskcalcError">Error in user input: value not found</sys:String>
-    <sys:String x:Key="subnetHeader">=============================================SUBNET CALCULATOR==============================================</sys:String>
+    <sys:String x:Key="subnetHeader">============================================= SUBNET CALCULATOR ==============================================</sys:String>
     <sys:String x:Key="subnetMessage1">was subnetted into</sys:String>
     <sys:String x:Key="subnetMessage2">subnets</sys:String>
     <sys:String x:Key="subnetMessage3">All subnets:</sys:String>
@@ -165,7 +168,7 @@
     <sys:String x:Key="subnetBroadcast">Broadcast address:</sys:String>
     <sys:String x:Key="subnetTotalHost">Total usable hosts:</sys:String>
     <sys:String x:Key="subnetMaskError">Error in user input: same mask</sys:String>
-    <sys:String x:Key="supernetHeader">=============================================SUPERNET CALCULATOR============================================</sys:String>
+    <sys:String x:Key="supernetHeader">============================================= SUPERNET CALCULATOR ============================================</sys:String>
     <sys:String x:Key="supernetAddress">Supernet address:</sys:String>
     <sys:String x:Key="supernetMask">Netmask:</sys:String>
     <sys:String x:Key="supernetWildcard">Wildcard mask:</sys:String>
@@ -173,7 +176,7 @@
     <sys:String x:Key="supernetLastUsable">Last usable address:</sys:String>
     <sys:String x:Key="supernetBroadcast">Broadcast address:</sys:String>
     <sys:String x:Key="supernetTotalHost">Total usable hosts:</sys:String>
-    <sys:String x:Key="netCalcHeader">==============================================NETWORK CALCULATOR============================================</sys:String>
+    <sys:String x:Key="netCalcHeader">============================================== NETWORK CALCULATOR ============================================</sys:String>
     <sys:String x:Key="netCalcAddress">Network address:</sys:String>
     <sys:String x:Key="netCalcMask">Netmask:</sys:String>
     <sys:String x:Key="netCalcWildcard">Wildcard mask:</sys:String>
