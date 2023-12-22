@@ -21,7 +21,7 @@ $(document).ready(function() {
 
         // Faites défiler vers la section cible avec une animation
 		$('html, body').animate({
-			scrollTop: targetSection.offset().top - 550 // Ajoutez ou ajustez cette valeur pour corriger la position
+			scrollTop: targetSection.offset().top - 110 // Ajoutez ou ajustez cette valeur pour corriger la position
 		}, 1000);
     });
 
