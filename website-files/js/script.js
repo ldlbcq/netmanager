@@ -14,7 +14,7 @@ $(document).ready(function() {
     var menuButton = $("#logo-link");
 
     // Ajoutez un gestionnaire d'événements à chaque lien du menu pour fermer le menu et défilez vers la section correspondante
-    $("#fullscreen-menu a").on('click', function(e) {
+    $("#fullscreen-menu a, a.hero-button[href^='#']").on('click', function(e) {
         e.preventDefault(); // Empêche le comportement par défaut du lien
         var targetSection = $($(this).attr('href'));
         $("#fullscreen-menu").fadeOut();
