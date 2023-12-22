@@ -1,8 +1,8 @@
 # NetManager 
 
 ## Two packages format: 
-## - Installer
-## - Portable
+### - Installer
+### - Portable
 
 ## PROJECT FILES IN project-files folder
 
