@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'fa-regular-400'; /* Nom de votre police */
-    src: url('fonts/fa-regular-400.woff2') format('woff2'); /* Chemin vers le fichier de police */
+    src: url('../fonts/fa-regular-400.woff2') format('woff2'); /* Chemin vers le fichier de police */
     font-weight: normal;
     font-style: normal;
 }
