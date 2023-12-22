@@ -18,7 +18,6 @@ namespace NetManager
         {
             base.OnStartup(e);
             InitializeConfigFile();
-            MainWindow.Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri("pack://application:,,,/NetManager;component/icon.ico"));
             if (File.Exists(configFilePath))
             {
                 string[] settings = File.ReadAllLines(configFilePath);
