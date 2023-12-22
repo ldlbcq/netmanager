@@ -6,4 +6,4 @@
 
 ## PROJECT FILES IN project-files folder
 
-## WEBSITE PAGE IN website-files
+## WEBSITE FILES IN website-files
