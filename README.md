@@ -1,1 +1,1 @@
-# NetManager - Copie
+# NetManager
