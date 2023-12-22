@@ -37,9 +37,69 @@ namespace NetManager
         {
             InitializeComponent();
             LoadUserSettings();
-            LoadNetworkInterfaces();
             Instance = this;
+            ContentRendered += MainWindow_ContentRendered;
         }
+
+        #region MainDialog
+
+        private void MainWindow_ContentRendered(object sender, EventArgs e)
+        {
+            // Appeler la méthode qui ouvre le dialogue lorsque le contenu de MainWindow est rendu
+            OpenDialog();
+        }
+
+        private async Task OpenDialog()
+        {
+            var mainDialog = new MainDialog();
+            mainDialog.InterfaceSelected += MainDialog_InterfaceSelected;
+            mainDialog.ShowDialog();
+
+        }
+
+        private void MainDialog_InterfaceSelected(object sender, InterfaceSelectedEventArgs e)
+        {
+            // Utilisez e.SelectedInterfaceContent comme nécessaire
+            string selectedContent = e.SelectedInterfaceContent;
+
+            selectedInterfaceId = ((MainDialog)sender).GetSelectedInterfaceId();
+
+        }
+
+        private void RotateChangeCardIconTo360Degrees(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DoubleAnimation rotationAnimation = new DoubleAnimation();
+            rotationAnimation.From = 0;
+            rotationAnimation.To = -360;
+            rotationAnimation.Duration = TimeSpan.FromSeconds(0.3);
+            ChangeCardIcon.RenderTransformOrigin = new Point(0.5, 0.5);
+            ChangeCardIcon.RenderTransform = new RotateTransform();
+            ChangeCardIcon.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, rotationAnimation);
+        }
+
+        private void RotateChangeCardIconTo0Degrees(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DoubleAnimation rotationAnimation = new DoubleAnimation();
+            rotationAnimation.From = -360;
+            rotationAnimation.To = 0;
+            rotationAnimation.Duration = TimeSpan.FromSeconds(0.3);
+            ChangeCardIcon.RenderTransformOrigin = new Point(0.5, 0.5);
+            ChangeCardIcon.RenderTransform = new RotateTransform();
+            ChangeCardIcon.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, rotationAnimation);
+        }
+
+        private void ChangeCard_Click(object sender, RoutedEventArgs e)
+        {
+            MainDialog mainDialog = new MainDialog();
+            mainDialog.InterfaceSelected += MainDialog_InterfaceSelected;
+            mainDialog.ShowDialog();
+            ipAddrTxtBx1.Clear();
+            netMaskTxtBx1.Clear();
+            defGatewayTxtBx1.Clear();
+            primDnsTxtBx1.Clear();
+            secDnsTxtBx1.Clear();
+        } 
+        #endregion
 
         #region NavigationMenu
 
@@ -78,46 +138,52 @@ namespace NetManager
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void ChooseInterfaceTab_Click(object sender, RoutedEventArgs e)
+
+        private void NetConfigTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 0;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void NetConfigTab_Click(object sender, RoutedEventArgs e)
+        private void ChangeConfigTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 1;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void ChangeConfigTab_Click(object sender, RoutedEventArgs e)
+        private void NetCommandsTab_Click(object sender, RoutedEventArgs e)
         {
             TabControl1.SelectedIndex = 2;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void NetCommandsTab_Click(object sender, RoutedEventArgs e)
-        {
-            TabControl1.SelectedIndex = 3;
-            ToggleDrawerAndAnimateIcon();
-        }
-
         private void CalculatorTab_Click(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 5;
+            TabControl1.SelectedIndex = 4;
             ToggleDrawerAndAnimateIcon();
         }
 
         private void SettingsTab_Click(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 6;
+            TabControl1.SelectedIndex = 5;
             ToggleDrawerAndAnimateIcon();
         }
 
-        private void RotateTo45Degrees(object sender, System.Windows.Input.MouseEventArgs e)
+        private void RotateSettingsIconTo90Degrees(object sender, System.Windows.Input.MouseEventArgs e)
         {
             DoubleAnimation rotationAnimation = new DoubleAnimation();
-            rotationAnimation.From = 90;
+            rotationAnimation.From = 0;
+            rotationAnimation.To = -90;
+            rotationAnimation.Duration = TimeSpan.FromSeconds(0.3);
+            SettingsIcon.RenderTransformOrigin = new Point(0.5, 0.5);
+            SettingsIcon.RenderTransform = new RotateTransform();
+            SettingsIcon.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, rotationAnimation);
+        }
+
+        private void RotateSettingsIconTo0Degrees(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DoubleAnimation rotationAnimation = new DoubleAnimation();
+            rotationAnimation.From = -90;
             rotationAnimation.To = 0;
             rotationAnimation.Duration = TimeSpan.FromSeconds(0.3);
             SettingsIcon.RenderTransformOrigin = new Point(0.5, 0.5);
@@ -125,130 +191,34 @@ namespace NetManager
             SettingsIcon.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, rotationAnimation);
         }
 
-        private void RotateTo0Degrees(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            DoubleAnimation rotationAnimation = new DoubleAnimation();
-            rotationAnimation.From = 0;
-            rotationAnimation.To = 90;
-            rotationAnimation.Duration = TimeSpan.FromSeconds(0.3);
-            SettingsIcon.RenderTransformOrigin = new Point(0.5, 0.5);
-            SettingsIcon.RenderTransform = new RotateTransform();
-            SettingsIcon.RenderTransform.BeginAnimation(RotateTransform.AngleProperty, rotationAnimation);
-        }
-
-        #endregion
-
-        #region LoadNetworkInterfaces
-        private void LoadNetworkInterfaces()
-        {
-            // Récupérer toutes les interfaces réseau
-            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-
-            // Utiliser le StackPanel existant
-            StackPanel stackPanel = tabItemStackPanel;
-
-            foreach (NetworkInterface netInterface in networkInterfaces)
-            {
-                // Filtrer les interfaces virtuelles, les interfaces de boucle logicielle et Bluetooth
-                if (!IsVirtualInterface(netInterface) && !IsLoopbackInterface(netInterface) && !IsBluetoothInterface(netInterface))
-                {
-                    string formattedMacAddress = BitConverter.ToString(netInterface.GetPhysicalAddress().GetAddressBytes()).Replace("-", ":");
-
-                    // Créer un bouton radio pour chaque interface non filtrée
-                    RadioButton radioButton = new RadioButton
-                    {
-                        Content = $"{netInterface.Description} (MAC: {formattedMacAddress})",
-                        Tag = netInterface.Id,
-                        GroupName = "NetworkInterfaces",
-                        Margin = new Thickness(0, 5, 0, 5), // Ajustez la marge pour l'espacement
-                        VerticalAlignment = VerticalAlignment.Center,
-                        HorizontalAlignment = System.Windows.HorizontalAlignment.Center
-                    };
-
-                    // Gérer l'événement Checked pour savoir quel bouton radio a été sélectionné
-                    radioButton.Checked += RadioButton_Checked;
-
-                    // Ajouter le bouton radio au StackPanel existant
-                    stackPanel.Children.Add(radioButton);
-                }
-            }
-        }
-
-        private bool IsVirtualInterface(NetworkInterface networkInterface)
-        {
-            // Ajoutez des termes spécifiques pour identifier les interfaces virtuelles
-            string[] virtualInterfaceKeywords = { "VirtualBox", "VMware", "Hyper-V", "Microsoft Wi-Fi Direct Virtual Adapter", "Fortinet" };
-
-            foreach (string keyword in virtualInterfaceKeywords)
-            {
-                if (networkInterface.Description.Contains(keyword))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool IsLoopbackInterface(NetworkInterface networkInterface)
-        {
-            return networkInterface.NetworkInterfaceType == NetworkInterfaceType.Loopback;
-        }
-
-        private bool IsBluetoothInterface(NetworkInterface networkInterface)
-        {
-            // Ajoutez des termes spécifiques pour identifier les interfaces Bluetooth dans la description
-            string[] bluetoothInterfaceKeywords = { "Bluetooth", "BT" };
-
-            foreach (string keyword in bluetoothInterfaceKeywords)
-            {
-                if (networkInterface.Description.Contains(keyword))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            // Logique à exécuter lorsque le bouton radio est sélectionné
-            RadioButton selectedRadioButton = (RadioButton)sender;
-            selectedInterfaceId = selectedRadioButton.Tag.ToString();
-
-            // Faites quelque chose avec l'interface sélectionnée (par exemple, affichez des informations à ce sujet)
-            MessageBox.Show($"Interface sélectionnée : {selectedRadioButton.Content}");
-        }
         #endregion
 
         #region NetSettings
 
         private void ShowNetSettings(object sender, RoutedEventArgs e)
         {
-            string ipAddr = ipAddressTxtBx1.Text;
-            string subnetMask = subnetMaskTxtBx1.Text;
-            string gateway = gatewayTxtBx1.Text;
-            string primDns = firstDnsTxtBx1.Text;
-            string secDns = secondDnsTxtBx1.Text;
+            if(ipAddrTxtBx1.Text != string.Empty && netMaskTxtBx1.Text != string.Empty && defGatewayTxtBx1.Text != string.Empty && primDnsTxtBx1.Text != string.Empty && secDnsTxtBx1.Text != string.Empty)
+            {
+                ipAddrTxtBx1.Clear();
+                netMaskTxtBx1.Clear();
+                defGatewayTxtBx1.Clear();
+                primDnsTxtBx1.Clear();
+                secDnsTxtBx1.Clear();
+            }
 
             NetworkInterface[] interfaces = NetworkInterface.GetAllNetworkInterfaces();
 
             foreach (NetworkInterface iface in interfaces)
             {
-                if (iface.Id == selectedInterfaceId &&
-                    iface.OperationalStatus == OperationalStatus.Up &&
-                    iface.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                    !IsVirtualInterface(iface) &&
-                    !IsBluetoothInterface(iface))
+                if (iface.Id == selectedInterfaceId)
                 {
                     IPInterfaceProperties ipProperties = iface.GetIPProperties();
                     foreach (UnicastIPAddressInformation ip in ipProperties.UnicastAddresses)
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            ipAddressTxtBx1.Text = ipAddr + ip.Address.ToString();
-                            subnetMaskTxtBx1.Text = subnetMask + ip.IPv4Mask.ToString();
+                            ipAddrTxtBx1.Text = ip.Address.ToString();
+                            netMaskTxtBx1.Text = ip.IPv4Mask.ToString();
                         }
                     }
                     GatewayIPAddressInformationCollection gatewayAddresses = ipProperties.GatewayAddresses;
@@ -256,17 +226,17 @@ namespace NetManager
                     {
                         if (gw.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            gatewayTxtBx1.Text = gateway + gw.Address.ToString();
+                            defGatewayTxtBx1.Text = gw.Address.ToString();
                         }
                     }
                     System.Net.NetworkInformation.IPAddressCollection dnsAddresses = ipProperties.DnsAddresses;
                     int dnsCount = dnsAddresses.Count;
                     if (dnsCount > 0)
                     {
-                        firstDnsTxtBx1.Text = primDns + dnsAddresses[0].ToString();
+                        primDnsTxtBx1.Text = dnsAddresses[0].ToString();
                         if (dnsCount > 1)
                         {
-                            secondDnsTxtBx1.Text = secDns + dnsAddresses[1].ToString();
+                            secDnsTxtBx1.Text = dnsAddresses[1].ToString();
                         }
                     }
                 }
@@ -360,19 +330,19 @@ namespace NetManager
                 string selectedFilePath = ExportCustomConfig.FileName;
                 using (StreamWriter writer = new StreamWriter(ExportCustomConfig.FileName))
                 {
-                    writer.WriteLine(ipStr.ToString() + ipAddrTxtBx.Text + Environment.NewLine);
-                    writer.WriteLine(maskStr.ToString() + netMaskTxtBx.Text + Environment.NewLine);
-                    writer.WriteLine(gtwStr.ToString() + defGatewayTxtBx.Text + Environment.NewLine);
-                    writer.WriteLine(pdnsStr.ToString() + primDnsTxtBx.Text + Environment.NewLine);
-                    writer.WriteLine(sdnsStr.ToString() + secDnsTxtBx.Text + Environment.NewLine);
+                    writer.WriteLine(ipStr.ToString() + ipAddrTxtBx2.Text + Environment.NewLine);
+                    writer.WriteLine(maskStr.ToString() + netMaskTxtBx2.Text + Environment.NewLine);
+                    writer.WriteLine(gtwStr.ToString() + defGatewayTxtBx2.Text + Environment.NewLine);
+                    writer.WriteLine(pdnsStr.ToString() + primDnsTxtBx2.Text + Environment.NewLine);
+                    writer.WriteLine(sdnsStr.ToString() + secDnsTxtBx2.Text + Environment.NewLine);
                 }
                 MessageBox.Show(resources["exportNetSettingsMessage1"].ToString() + ExportCustomConfig.FileName, resources["netSettingsMessageTitle"].ToString(),
                     MessageBoxButton.OK, MessageBoxImage.Information);
-                ipAddrTxtBx.Clear();
-                netMaskTxtBx.Clear();
-                defGatewayTxtBx.Clear();
-                primDnsTxtBx.Clear();
-                secDnsTxtBx.Clear();
+                ipAddrTxtBx2.Clear();
+                netMaskTxtBx2.Clear();
+                defGatewayTxtBx2.Clear();
+                primDnsTxtBx2.Clear();
+                secDnsTxtBx2.Clear();
             }
             else
             {
@@ -419,30 +389,30 @@ namespace NetManager
                         if (line.StartsWith(ipStr.ToString()))
                         {
                             string ipConf = line.Replace(ipStr, "");
-                            ipAddrTxtBx.Text = ipConf;
+                            ipAddrTxtBx2.Text = ipConf;
                         }
                         else if (line.StartsWith(maskStr.ToString()))
                         {
                             string maskConf = line.Replace(maskStr, "");
-                            netMaskTxtBx.Text = maskConf;
+                            netMaskTxtBx2.Text = maskConf;
 
                         }
                         else if (line.StartsWith(gtwStr.ToString()))
                         {
                             string gtwConf = line.Replace(gtwStr, "");
-                            defGatewayTxtBx.Text = gtwConf;
+                            defGatewayTxtBx2.Text = gtwConf;
 
                         }
                         else if (line.StartsWith(pdnsStr.ToString()))
                         {
                             string pdnsConf = line.Replace(pdnsStr, "");
-                            primDnsTxtBx.Text = pdnsConf;
+                            primDnsTxtBx2.Text = pdnsConf;
 
                         }
                         else if (line.StartsWith(sdnsStr.ToString()))
                         {
                             string sdnsConf = line.Replace(sdnsStr, "");
-                            secDnsTxtBx.Text = sdnsConf;
+                            secDnsTxtBx2.Text = sdnsConf;
 
                         }
                     }
@@ -466,18 +436,18 @@ namespace NetManager
                         psi.UseShellExecute = true;
                         psi.WindowStyle = ProcessWindowStyle.Hidden;
                         psi.Verb = "runas";
-                        psi.Arguments = ("/c netsh interface ipv4 set address " + adapter.Name + " static " + ipAddrTxtBx.Text
-                            + " " + netMaskTxtBx.Text + " " + defGatewayTxtBx.Text + " & netsh interface ipv4 set dnsservers " + adapter.Name + " static "
-                            + primDnsTxtBx.Text + " primary & netsh interface ipv4 add dnsservers " + adapter.Name + " " + secDnsTxtBx.Text + " index=2");
+                        psi.Arguments = ("/c netsh interface ipv4 set address " + adapter.Name + " static " + ipAddrTxtBx2.Text
+                            + " " + netMaskTxtBx2.Text + " " + defGatewayTxtBx2.Text + " & netsh interface ipv4 set dnsservers " + adapter.Name + " static "
+                            + primDnsTxtBx2.Text + " primary & netsh interface ipv4 add dnsservers " + adapter.Name + " " + secDnsTxtBx2.Text + " index=2");
                         Process.Start(psi);
                     }
                 }
             }
-            ipAddrTxtBx.Clear();
-            netMaskTxtBx.Clear();
-            defGatewayTxtBx.Clear();
-            primDnsTxtBx.Clear();
-            secDnsTxtBx.Clear();
+            ipAddrTxtBx2.Clear();
+            netMaskTxtBx2.Clear();
+            defGatewayTxtBx2.Clear();
+            primDnsTxtBx2.Clear();
+            secDnsTxtBx2.Clear();
         }
 
         private void SetDynamicSettings(object sender, RoutedEventArgs e)
@@ -510,7 +480,7 @@ namespace NetManager
             string pingSuccess = Application.Current.Resources["pingSuccess"].ToString();
             string pingNotSuccess = Application.Current.Resources["pingNotSuccess"].ToString();
             string ipError = Application.Current.Resources["ipError"].ToString();
-            string ipAddress = ipAddrTxtBx1.Text;
+            string ipAddress = ipAddrTxtBx3.Text;
             int timeout = int.Parse(timeoutTxtBx.Text);
             int repetition = int.TryParse(repetitionTxtBx.Text, out int parsedRepetition) ? parsedRepetition : 0;
             Results results = new Results();
@@ -564,6 +534,7 @@ namespace NetManager
             string scanStartIPError = Application.Current.Resources["scanStartIPError"].ToString();
             string ipFamilyError = Application.Current.Resources["ipFamilyError"].ToString();
             string scanEndIPError = Application.Current.Resources["scanEndIPError"].ToString();
+            string scanMACSucces = Application.Current.Resources["scanMACSucces"].ToString();
             Results results = new Results();
             results.textResults.Text = scanHeader + Environment.NewLine;
             results.Show();
@@ -608,19 +579,77 @@ namespace NetManager
 
                 if (reply.Status == IPStatus.Success)
                 {
-                    string message = ipString + " " + scanSuccess + Environment.NewLine;
+                    string macAddress = GetMacAddress(ipString); // Obtenez l'adresse MAC
+                    string hostName = GetMachineName(ipString);
+                    string message = $"{ipString} {scanSuccess} {hostName} {scanMACSucces} {macAddress}{Environment.NewLine}";
                     results.textResults.Text += message;
                     await Task.Delay(1000); // Pause d'une seconde entre chaque ping
                 }
                 else
                 {
-                    string message = ipString + " " + scanNotSuccess + Environment.NewLine;
+                    string message = $"{ipString} {scanNotSuccess}{Environment.NewLine}";
                     results.textResults.Text += message;
                     await Task.Delay(1000); // Pause d'une seconde entre chaque ping
                 }
-
             }
 
+        }
+
+        private string GetMachineName(string ipAddress)
+        {
+            string notAvailableHostname = Application.Current.Resources["notAvailableHostname"].ToString();
+            try
+            {
+                IPHostEntry hostEntry = Dns.GetHostEntry(ipAddress);
+                return hostEntry.HostName;
+            }
+            catch (Exception)
+            {
+                return notAvailableHostname;
+            }
+        }
+
+        private string GetMacAddress(string ipAddress)
+        {
+            string notAvailableMAC = Application.Current.Resources["notAvailableMAC"].ToString();
+            try
+            {
+                var arp = new Process();
+                arp.StartInfo.FileName = "arp";
+                arp.StartInfo.Arguments = "-a " + ipAddress;
+                arp.StartInfo.UseShellExecute = false;
+                arp.StartInfo.RedirectStandardOutput = true;
+                arp.StartInfo.CreateNoWindow = true;
+                arp.Start();
+
+                string output = arp.StandardOutput.ReadToEnd();
+                arp.WaitForExit();
+
+                // Parsing MAC address from ARP command output
+                string[] lines = output.Split('\n');
+                if (lines.Length >= 4)
+                {
+                    string[] parts = lines[3].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length >= 3)
+                    {
+                        string macAddress = parts[1].ToUpper(); // Convertir en lettres capitales
+                        macAddress = macAddress.Replace("-", ":"); // Remplacer "-" par ":"
+                        return macAddress;
+                    }
+                    else
+                    {
+                        return notAvailableMAC;
+                    }
+                }
+                else
+                {
+                    return notAvailableMAC;
+                }
+            }
+            catch (Exception)
+            {
+                return notAvailableMAC;
+            }
         }
         #endregion
 
@@ -633,7 +662,7 @@ namespace NetManager
             string mtuNotSuccess = Application.Current.Resources["mtuNotSuccess"].ToString();
             string ipError = Application.Current.Resources["ipError"].ToString();
             string ipFamilyError = Application.Current.Resources["ipFamilyError"].ToString();
-            string ipAddress = ipAddrTxtBx2.Text;
+            string ipAddress = ipAddrTxtBx4.Text;
             int startSize = int.Parse(firstValueTxtBx.Text);
             int endSize = int.Parse(lastValueTxtBx.Text);
             Results results = new Results();
@@ -721,7 +750,7 @@ namespace NetManager
             results.textResults.Text = tracertHeader + Environment.NewLine;
             results.Show();
 
-            if (!IPAddress.TryParse(ipAddrTxtBx3.Text, out IPAddress ipAddress))
+            if (!IPAddress.TryParse(ipAddrTxtBx5.Text, out IPAddress ipAddress))
             {
                 results.Close();
                 MessageBox.Show(ipError + " " + ipAddrTxtBx3.Text);
@@ -942,6 +971,39 @@ namespace NetManager
             IPAddress ipAddress = new IPAddress(bytes);
             return ipAddress;
         }
+
+        public static int MaskToCidr(string mask)
+        {
+            string maskError = Application.Current.Resources["maskError"].ToString();
+            if (int.TryParse(mask, out int cidr))
+            {
+                if (cidr >= 0 && cidr <= 32)
+                {
+                    return cidr;
+                }
+            }
+
+            if (!IPAddress.TryParse(mask, out IPAddress ipAddress))
+            {
+                throw new ArgumentException(maskError + " " + mask);
+            }
+
+            byte[] bytes = ipAddress.GetAddressBytes();
+            int calculatedCidr = 0;
+
+            foreach (byte b in bytes)
+            {
+                byte currentByte = b;
+                while (currentByte > 0)
+                {
+                    calculatedCidr++;
+                    currentByte = (byte)(currentByte << 1);
+                }
+            }
+
+            return calculatedCidr;
+        }
+
         #endregion
 
         #region SubnetSupernet
@@ -1040,7 +1102,7 @@ namespace NetManager
 
         private void StartNetworkCalc(object sender, RoutedEventArgs e)
         {
-            string networkAddressString = ipAddrTxtBx4.Text;
+            string networkAddressString = ipAddrTxtBx6.Text;
             string subnetMaskString = ntwrkMaskTxtBx2.Text;
             string netCalcHeader = Application.Current.Resources["netCalcHeader"].ToString();
             string netCalcAddress = Application.Current.Resources["netCalcAddress"].ToString();
@@ -1089,39 +1151,13 @@ namespace NetManager
             ThemeAndColor themeAndColor = new ThemeAndColor();
             themeAndColor.Show();
         }
-        #endregion
 
-        public static int MaskToCidr(string mask)
+        private void OpenProjectWebsite(object sender, RoutedEventArgs e)
         {
-            string maskError = Application.Current.Resources["maskError"].ToString();
-            if (int.TryParse(mask, out int cidr))
-            {
-                if (cidr >= 0 && cidr <= 32)
-                {
-                    return cidr;
-                }
-            }
-
-            if (!IPAddress.TryParse(mask, out IPAddress ipAddress))
-            {
-                throw new ArgumentException(maskError + " " + mask);
-            }
-
-            byte[] bytes = ipAddress.GetAddressBytes();
-            int calculatedCidr = 0;
-
-            foreach (byte b in bytes)
-            {
-                byte currentByte = b;
-                while (currentByte > 0)
-                {
-                    calculatedCidr++;
-                    currentByte = (byte)(currentByte << 1);
-                }
-            }
-
-            return calculatedCidr;
+            string url = "https://github.com/L-Dlbcq/NetManager";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
+        #endregion
 
         #region ThemeAndColor
 
@@ -1164,15 +1200,13 @@ namespace NetManager
             WindowBorder.Background = new SolidColorBrush(primaryColor);
             NavIcon.Foreground = new SolidColorBrush(textColor);
             SettingsIcon.Foreground = new SolidColorBrush(textColor);
+            ChangeCardIcon.Foreground = new SolidColorBrush(textColor);
             WindowTitle.Foreground = new SolidColorBrush(textColor);
 
-            chooseInterfaceBtn.Foreground = new SolidColorBrush(textColor);
             netConfigBtn.Foreground = new SolidColorBrush(textColor);
             changeConfigBtn.Foreground = new SolidColorBrush(textColor);
             netCommandsBtn.Foreground = new SolidColorBrush(textColor);
             netCalcBtn.Foreground = new SolidColorBrush(textColor);
-
-            interfaceTxtBx.Foreground = new SolidColorBrush(textColor);
 
             ipAddressTxtBx1.Foreground = new SolidColorBrush(textColor);
             subnetMaskTxtBx1.Foreground = new SolidColorBrush(textColor);
@@ -1234,7 +1268,6 @@ namespace NetManager
             themeColorWizBtn.Foreground = new SolidColorBrush(textColor);
             languageTxtBx.Foreground = new SolidColorBrush(textColor);
             languageWizBtn.Foreground = new SolidColorBrush(textColor);
-            showTutorialBtn.Foreground = new SolidColorBrush(textColor);
             openProjectWebsiteBtn.Foreground = new SolidColorBrush(textColor);
             paletteHelper.SetTheme(theme);
         }
@@ -1248,6 +1281,7 @@ namespace NetManager
         {
             NavIcon.Foreground = new SolidColorBrush(color);
             SettingsIcon.Foreground = new SolidColorBrush(color);
+            ChangeCardIcon.Foreground = new SolidColorBrush(color);
         }
 
         public void UpdateTitleTextColor(Color color)
@@ -1257,13 +1291,10 @@ namespace NetManager
 
         public void UpdateTextBoxButtonTextColor(Color color)
         {
-            chooseInterfaceBtn.Foreground = new SolidColorBrush(color);
             netConfigBtn.Foreground = new SolidColorBrush(color);
             changeConfigBtn.Foreground = new SolidColorBrush(color);
             netCommandsBtn.Foreground = new SolidColorBrush(color);
             netCalcBtn.Foreground = new SolidColorBrush(color);
-
-            interfaceTxtBx.Foreground = new SolidColorBrush(color);
 
             ipAddressTxtBx1.Foreground = new SolidColorBrush(color);
             subnetMaskTxtBx1.Foreground = new SolidColorBrush(color);
@@ -1325,7 +1356,6 @@ namespace NetManager
             themeColorWizBtn.Foreground = new SolidColorBrush(color);
             languageTxtBx.Foreground = new SolidColorBrush(color);
             languageWizBtn.Foreground = new SolidColorBrush(color);
-            showTutorialBtn.Foreground = new SolidColorBrush(color);
             openProjectWebsiteBtn.Foreground = new SolidColorBrush(color);
         }
 
@@ -1333,12 +1363,12 @@ namespace NetManager
 
         private void NextPage(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 4;
+            TabControl1.SelectedIndex = 3;
         }
 
         private void PreviousPage(object sender, RoutedEventArgs e)
         {
-            TabControl1.SelectedIndex = 3;
+            TabControl1.SelectedIndex = 2;
         }
 
         #region TrayIcon
@@ -1373,10 +1403,5 @@ namespace NetManager
         }
         #endregion
 
-        private void OpenProjectWebsite(object sender, RoutedEventArgs e)
-        {
-            string url = "https://github.com/L-Dlbcq/NetManager";
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-        }
     }
 }

@@ -31,7 +31,7 @@
     <sys:String x:Key="ChangeConfig">CHANGER CONFIGURATION</sys:String>
     <sys:String x:Key="NetCommands">COMMANDES RESEAUX</sys:String>
     <sys:String x:Key="Calculator">CALCULATRICE RESEAU</sys:String>
-    <sys:String x:Key="AppSettings">APPLICATION'S SETTINGS</sys:String>
+    <sys:String x:Key="AppSettings">PARAMETRES D'APPLICATION</sys:String>
     <sys:String x:Key="French">METTRE EN FRANCAIS</sys:String>
     <sys:String x:Key="English">METTRE EN ANGLAIS</sys:String>
     <sys:String x:Key="ApplyLang">APPLIQUER CHOIX LANGUE</sys:String>
@@ -116,6 +116,7 @@
     <sys:String x:Key="UITitle">NetManager - Sélection couleur et thème</sys:String>
     <sys:String x:Key="ResultTitle">NetManager - Résultats des commandes</sys:String>
     <sys:String x:Key="LanguageTitle">NetManager - Sélection de la langue</sys:String>
+    <sys:String x:Key="MainDialogTitle">NetManager - Sélection de la carte réseau</sys:String>
     <sys:String x:Key="MainTitle">NetManager</sys:String>
 
     <!-- Menu de notification -->
@@ -130,8 +131,11 @@
     <sys:String x:Key="pingSuccess">Ping réussi sur l'adresse IP</sys:String>
     <sys:String x:Key="pingNotSuccess">Ping impossible sur l'adresse IP</sys:String>
     <sys:String x:Key="scanHeader">================================================ SCAN RESEAU ================================================</sys:String>
-    <sys:String x:Key="scanSuccess">répond</sys:String>
+    <sys:String x:Key="scanSuccess">répond // Nom d'hôte: </sys:String>
+    <sys:String x:Key="scanMACSucces">// MAC Address:</sys:String>
     <sys:String x:Key="scanNotSuccess">ne répond pas</sys:String>
+    <sys:String x:Key="notAvailableMAC">MAC indisponible (Possiblement hôte actuel)</sys:String>
+    <sys:String x:Key="notAvailableHostname">Acun nom d'hôte trouvé</sys:String>
     <sys:String x:Key="scanStartIPError">Erreur de saisie: adresse IP de début</sys:String>
     <sys:String x:Key="scanEndIPError">Erreur de saisie: adresse IP de fin</sys:String>
     <sys:String x:Key="mtuHeader">========================================== CHECKER TAILLE PAQUET ============================================</sys:String>
@@ -177,6 +181,32 @@
     <sys:String x:Key="netCalcBroadcast">Adresse de diffusion:</sys:String>
     <sys:String x:Key="netCalcTotalHost">Total d'hôtes utilisables:</sys:String>
 
-
+    <!--Tooltip-->
+    <sys:String x:Key="MenuIconTooltip">Menu de navigation</sys:String>
+    <sys:String x:Key="NetConfigTooltip">Afficher le menu de configuration réseau</sys:String>
+    <sys:String x:Key="ChangeConfigTooltip">Afficher le menu de changement de configuration réseau</sys:String>
+    <sys:String x:Key="NetCommandsTooltip">Afficher le menu des commandes réseau</sys:String>
+    <sys:String x:Key="NetCalcTooltip">Afficher le menu de la calculatrice réseau</sys:String>
+    <sys:String x:Key="SettingsTooltip">Afficher le menu des paramètres d'application</sys:String>
+    <sys:String x:Key="ShSettingsTooltip">Afficher les paramètres de la carte réseau choisie</sys:String>
+    <sys:String x:Key="ExportSettingsTooltip">Exporter les paramètres de la carte réseau</sys:String>
+    <sys:String x:Key="ChangeCardTooltip">Afficher le menu de sélection de carte réseau</sys:String>
+    <sys:String x:Key="SetStaticSettingsTooltip">Appliquer une configuration statique à la carte réseau choisie</sys:String>
+    <sys:String x:Key="SetDynamicSettingsTooltip">Appliquer une configuration dynamique à la carte réseau choisie</sys:String>
+    <sys:String x:Key="ImportSettingsTooltip">Importer des paramètres sur la carte réseau choisie</sys:String>
+    <sys:String x:Key="PingTooltip">Afficher les réponses d'un hôte à la commande PING</sys:String>
+    <sys:String x:Key="ScanNtwrkTooltip">Afficher les adresses IP disponibles sur le réseau</sys:String>
+    <sys:String x:Key="CheckMTUTooltip">Afficher les valeurs de paquets utilisables sur un hôte</sys:String>
+    <sys:String x:Key="NextPageTooltip">Afficher les commandes suivantes</sys:String>
+    <sys:String x:Key="showARPCacheTooltip">Afficher la table de correspondance IP/MAC de l'hôte</sys:String>
+    <sys:String x:Key="TracerouteTooltip">Afficher le chemin utilisé pour accèder à un hôte</sys:String>
+    <sys:String x:Key="ShowRoutingTableTooltip">Afficher la table de routage de l'hôte</sys:String>
+    <sys:String x:Key="PreviousPageTooltip">Afficher les commandes précédentes</sys:String>
+    <sys:String x:Key="NtwrkMaskCalcTooltip">Afficher les résultats de la conversion du masque</sys:String>
+    <sys:String x:Key="NettingCalcTooltip">Afficher les résultats des découpage réseau</sys:String>
+    <sys:String x:Key="NtwrkCalcTooltip">Afficher les résultats des calculs réseau</sys:String>
+    <sys:String x:Key="ThemeColorWizTooltip">Afficher les paramètres Theme et Couleur de l'application</sys:String>
+    <sys:String x:Key="LanguageWizTooltip">Afficher les paramètres de langue de l'application</sys:String>
+    <sys:String x:Key="OpenProjectWbesiteTooltip">Ouvrir le site web du projet</sys:String>
 
 </ResourceDictionary>

@@ -124,6 +124,7 @@
     <sys:String x:Key="CustomClrTitle">NetManager - Custom color creation tool</sys:String>
     <sys:String x:Key="ResultTitle">NetManager - Command results</sys:String>
     <sys:String x:Key="LanguageTitle">NetManager - Language selection wizard</sys:String>
+    <sys:String x:Key="MainDialogTitle">NetManager - Interface selection wizard</sys:String>
     <sys:String x:Key="MainTitle">NetManager</sys:String>
     
     <!-- Tray Menu -->
@@ -138,8 +139,11 @@
     <sys:String x:Key="pingSuccess">Ping sucessful on </sys:String>
     <sys:String x:Key="pingNotSuccess">Ping not sucessful on</sys:String>
     <sys:String x:Key="scanHeader">=============================================== SCAN NETWORK ===============================================</sys:String>
-    <sys:String x:Key="scanSuccess"> is responding</sys:String>
+    <sys:String x:Key="scanSuccess"> is responding // Hostname: </sys:String>
+    <sys:String x:Key="scanMACSucces">// MAC Address: </sys:String>
     <sys:String x:Key="scanNotSuccess"> is not responding</sys:String>
+    <sys:String x:Key="notAvailableMAC">MAC not available (Maybe actual host)</sys:String>
+    <sys:String x:Key="notAvailableHostname">No hostname found</sys:String>
     <sys:String x:Key="scanStartIPError">Error in user input: starting IP address</sys:String>
     <sys:String x:Key="scanEndIPError">Error in user input: ending IP address</sys:String>
     <sys:String x:Key="mtuHeader">=============================================== MTU CHECKER ================================================</sys:String>
@@ -185,6 +189,32 @@
     <sys:String x:Key="netCalcBroadcast">Broadcast address:</sys:String>
     <sys:String x:Key="netCalcTotalHost">Total usable hosts:</sys:String>
 
-
+    <!--Tooltip-->
+    <sys:String x:Key="MenuIconTooltip">Navigation menu</sys:String>
+    <sys:String x:Key="NetConfigTooltip">Show network card actual configuration menu</sys:String>
+    <sys:String x:Key="ChangeConfigTooltip">Show network card new configuration menu</sys:String>
+    <sys:String x:Key="NetCommandsTooltip">Show network command menu</sys:String>
+    <sys:String x:Key="NetCalcTooltip">Show network calculator menu</sys:String>
+    <sys:String x:Key="SettingsTooltip">Show application settings menu</sys:String>
+    <sys:String x:Key="ShSettingsTooltip">Show selected network card settings </sys:String>
+    <sys:String x:Key="ExportSettingsTooltip">Export selected network card settings</sys:String>
+    <sys:String x:Key="ChangeCardTooltip">Show network card selection menu</sys:String>
+    <sys:String x:Key="SetStaticSettingsTooltip">Apply selected network card static settings</sys:String>
+    <sys:String x:Key="SetDynamicSettingsTooltip">Apply selected network card dynamic settings</sys:String>
+    <sys:String x:Key="ImportSettingsTooltip">Import settings to selected network card </sys:String>
+    <sys:String x:Key="PingTooltip">Display PING to host response</sys:String>
+    <sys:String x:Key="ScanNtwrkTooltip">Display available IP addresses on network</sys:String>
+    <sys:String x:Key="CheckMTUTooltip">display available MTU packet size for host</sys:String>
+    <sys:String x:Key="NextPageTooltip">Go to next commands page</sys:String>
+    <sys:String x:Key="showARPCacheTooltip">Display hots's IP/MAC mapping table</sys:String>
+    <sys:String x:Key="TracerouteTooltip">Display host access route</sys:String>
+    <sys:String x:Key="ShowRoutingTableTooltip">Display host's routing table</sys:String>
+    <sys:String x:Key="PreviousPageTooltip">Go to previous commands page</sys:String>
+    <sys:String x:Key="NtwrkMaskCalcTooltip">Display mask calculations results</sys:String>
+    <sys:String x:Key="NettingCalcTooltip">Display subnet/supernet calculations results</sys:String>
+    <sys:String x:Key="NtwrkCalcTooltip">Display network calculations results</sys:String>
+    <sys:String x:Key="ThemeColorWizTooltip">Show application's theme and color settings</sys:String>
+    <sys:String x:Key="LanguageWizTooltip">Show application's language settings</sys:String>
+    <sys:String x:Key="OpenProjectWbesiteTooltip">Open project website</sys:String>
 
 </ResourceDictionary>
