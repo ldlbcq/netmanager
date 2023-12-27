@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="website-files/img/icons/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="website-files/img/icons/favicon.ico">
+    <link rel="stylesheet" href="website-files/css/style.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+	<script src="website-files/js/script.js"></script>
+    <title>NetManager</title>
+</head>
+<body>
+    <div class="container">
+	
+		<header>
+			<a href="https://ldlbcq.github.io/netmanager/" class="header-button">
+				NetManager
+			</a>
+			<div id="logo-link">
+                <span id="menu-text">Menu ☰</span>
+            </div>
+		</header>
+		
+        <div class="fullscreen-menu" id="fullscreen-menu">
+			<span class="close-button" id="close-button">&times;</span>
+            <a href="#features">Features</a>
+			<a href="#carousel-section">Gallery</a>
+            <a href="#download" class="transparent-button">Download</a>
+            <a href="#support">Support</a>
+        </div>
+		
+		<section id="hero">
+			<img src="website-files\img\icons\icon.png" alt="Logo NetManager" class="hero-logo">
+			<h2>NetManager</h2>
+			<p>The networking tool you needed.</p>
+			<p>NetManager is a Free and Open Source Software (FOSS) <a href="https://github.com/ldlbcq/netmanager/tree/master/project-files">project.</a></p>
+			<a href="#download" class="hero-button scroll-to-download">Download</a>
+		</section>
+
+		<section id="image-section">
+			<img src="website-files\img\index.png" alt="index">
+		</section>
+		<div class="scroll-container ">
+			<section id="features" class="scroll-section top-border-section">
+				<h2>Features</h3>
+				<p id="paragraph">Change your settings or calculate subnet never been that easier...</p>
+				<div class="feature-cards-container">
+					<div class="feature-card">
+						<img src="website-files\img\icons\github-icon.png" alt="GitHub Icon" class="card-icon">
+						<h3>Open source</h3>
+						<p>Free and Open Source Software (FOSS.).</p>
+						<p>Made for the community and supported by the community</p>
+					</div>
+					<div class="feature-card">
+					<img src="website-files\img\icons\app-icon.png" alt="Newtork-Based Features Icon" class="card-icon">
+						<h3>4 network-based features</h3>
+						<p>4 features to permit a lot of things.</p>
+						<p>Some others features planned to add.</p>
+					</div>
+					<div class="feature-card">
+					<img src="website-files\img\icons\design-icon.png" alt="Design Icon" class="card-icon">
+						<h3>Modern & Friendly design</h3>
+						<p>A modern design and friendly user experience.</p>
+						<p>Perfect for newbies or advanced users.</p>
+					</div>
+				</div>
+			</section>
+				<section id="carousel-section" class="scroll-section top-border-section">
+				<h2>Gallery</h2>
+				<div class="carousel">
+					<div><img src="website-files\img\carrousel\carrousel-1.png" alt="Image 1"></div>
+					<div><img src="website-files\img\carrousel\carrousel-2.png" alt="Image 2"></div>
+					<div><img src="website-files\img\carrousel\carrousel-3.png" alt="Image 3"></div>
+					<div><img src="website-files\img\carrousel\carrousel-4.png" alt="Image 4"></div>
+					<div><img src="website-files\img\carrousel\carrousel-5.png" alt="Image 5"></div>
+					<div><img src="website-files\img\carrousel\carrousel-6.png" alt="Image 6"></div>
+					<div><img src="website-files\img\carrousel\carrousel-7.png" alt="Image 7"></div>
+					<div><img src="website-files\img\carrousel\carrousel-8.png" alt="Image 8"></div>
+					<div class="custom-size custom-align"><img src="website-files\img\carrousel\carrousel-9.png" alt="Image 9"></div>
+					<div class="custom-size"><img src="website-files\img\carrousel\carrousel-10.png" alt="Image 10"></div>
+					<div class="custom-size"><img src="website-files\img\carrousel\carrousel-11.png" alt="Image 11"></div>
+					<div class="custom-size"><img src="website-files\img\carrousel\carrousel-12.png" alt="Image 12"></div>
+			<!-- Ajoutez d'autres images selon vos besoins -->
+			</div>
+			</section>
+			<section id="download" class="scroll-section top-border-section">
+				<h2>Download</h3>
+				<p id="paragraph" >Hyped by what you see ? Let's try it !</p>
+				<p>Download now.</p>
+				<div class="sdownload-btn">
+					<a href="https://github.com/ldlbcq/netmanager/releases/download/v1.0.0/NetManager.Installer.exe" class="cta-button"><img src="website-files\img\icons\dl.png" id="dl-img">  Installer edition</a>
+					<a href="https://github.com/ldlbcq/netmanager/releases/download/v1.0.0/NetManager.Portable.Edition.exe" class="cta-button"><img src="website-files\img\icons\pendrive.png" id="dl-img">Portable edition</a>
+				</div>
+			</section>
+
+			<section id="support" class="scroll-section top-border-section">
+				<h2>Support</h2>
+				<p>A question ? Need help ? Use the form below ⬇️</p>
+					<form action="https://formspree.io/f/meqbyder" method="POST">
+					  <label>
+						Your email:
+						<input type="email" name="email" id="eMailarea">
+					  </label>
+					  <label for="category">Subject</label>
+					  <div class="select-wrapper">
+						<select class="select" name="category" onchange="updateSubject()">
+						  <option value="none">Select an option below</option>
+						  <option value="option1">Bug report</option>
+						  <option value="option2">Add feature</option>
+						</select>
+					  </div>
+					  <label>
+						Your message:
+						<textarea name="message" id="myTextarea" style="overflow-y: hidden;"></textarea>
+					  </label>
+					  <input type="hidden" name="_subject" value="Default Subject"> <!-- Valeur par défaut -->
+					  <button type="submit">Send</button>
+					</form>
+			</section>
+		</div>
+	</div>
+</body>
+<footer class="top-border-section">
+    <div class="footer-content">
+        <img src="website-files\img\head.jpg" alt="L-Dlbcq" class="profile-image">
+        <h3>L-Dlbcq</h3>
+        <a href="mailto:ldlbcq-github@proton.me">ldlbcq-github@proton.me</a>
+		<p>Created by L-Dlbcq</p>
+    </div>
+</footer>
+</html>

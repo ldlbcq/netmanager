@@ -1,9 +1,9 @@
 # NetManager 
 
 ## Two packages format: 
-### - Installer
-### - Portable
+### - [Installer](https://github.com/ldlbcq/netmanager/releases/download/v1.0.0/NetManager.Installer.exe "Installer version")
+### - [Portable](https://github.com/ldlbcq/netmanager/releases/download/v1.0.0/NetManager.Portable.Edition.exe "Portable version")
 
-## PROJECT FILES IN project-files folder
+## PROJECT FILES IN THIS [FOLDER](https://github.com/ldlbcq/netmanager/tree/master/project-files "PROJECT FOLDER")
 
-## WEBSITE PAGE IN website-files
+## WEBSITE FILES IN  THIS [FOLDER](https://github.com/ldlbcq/netmanager/tree/master/website-files "WEBSITE FOLDER")
