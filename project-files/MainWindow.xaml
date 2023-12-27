@@ -407,7 +407,7 @@
                             <Button x:Name="nxtMenuBtn" Content="{DynamicResource NextPage}" Canvas.Left="557" Canvas.Top="305" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="233" TabIndex="28" Click="NextPage" ToolTip="{DynamicResource NextPageTooltip}"/>
                         </Canvas>
                     </TabItem>
-                    <TabItem Visibility="Hidden">
+                    <TabItem Visibility="Visible">
                         <Canvas x:Name="tabItem4Canvas">
                             <TextBox x:Name="arpCacheTxtBx" IsReadOnly="True" CaretBrush="Transparent" Text="{DynamicResource ArpTxtBx}" FontFamily="Roboto Condensed" FontSize="20" Canvas.Left="10" Canvas.Top="45" Width="233" Height="38" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
                             <Button x:Name="showARPCacheBtn" Width="233" Height="38" Canvas.Left="10" Canvas.Top="131" Content="{DynamicResource Arp}" HorizontalAlignment="Center" VerticalAlignment="Top" Click="ShowARPCache" TabIndex="29" ToolTip="{DynamicResource showARPCacheTooltip}"/>

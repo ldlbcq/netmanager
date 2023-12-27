@@ -575,7 +575,7 @@ namespace NetManager
             {
                 string ipString = iPAddress.ToString();
                 Ping ping = new Ping();
-                PingReply reply = await ping.SendPingAsync(iPAddress, 1000);
+                PingReply reply = await ping.SendPingAsync(iPAddress, 500);
 
                 if (reply.Status == IPStatus.Success)
                 {
@@ -583,13 +583,13 @@ namespace NetManager
                     string hostName = GetMachineName(ipString);
                     string message = $"{ipString} {scanSuccess} {hostName} {scanMACSucces} {macAddress}{Environment.NewLine}";
                     results.textResults.Text += message;
-                    await Task.Delay(1000); // Pause d'une seconde entre chaque ping
+                    await Task.Delay(500); // Pause d'une seconde entre chaque ping
                 }
                 else
                 {
                     string message = $"{ipString} {scanNotSuccess}{Environment.NewLine}";
                     results.textResults.Text += message;
-                    await Task.Delay(1000); // Pause d'une seconde entre chaque ping
+                    await Task.Delay(500); // Pause d'une seconde entre chaque ping
                 }
             }
 

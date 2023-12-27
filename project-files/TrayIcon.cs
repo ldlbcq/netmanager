@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace NetManager
@@ -14,7 +16,7 @@ namespace NetManager
         {
             notifyIcon = new NotifyIcon
             {
-                Icon = new System.Drawing.Icon("icon.ico"),
+                Icon = GetIconFromResource("icon.ico"),
                 Visible = true
             };
             string? openAppMenuText = System.Windows.Application.Current.Resources["showFromTray"] as string;
@@ -27,6 +29,25 @@ namespace NetManager
 
             notifyIcon.DoubleClick += OnTrayIconDoubleClick;
         }
+
+        private Icon GetIconFromResource(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            using (Stream iconStream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (iconStream != null)
+                {
+                    return new Icon(iconStream);
+                }
+                else
+                {
+                    // Handle the case where the resource is not found
+                    return null;
+                }
+            }
+        }
+
         private void OnTrayIconDoubleClick(object sender, EventArgs e)
         {
             MainWindow.Instance.WindowState = System.Windows.WindowState.Normal;
